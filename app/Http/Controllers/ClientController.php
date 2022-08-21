@@ -11,7 +11,7 @@ class ClientController extends Controller
     public function index($qr)
     {
         $config = Config::first();
-        $cliente = Cliente::where('qr', $qr)->first();
+        $cliente = Cliente::where('qr', $qr)->firstOrFail();
         return view('client', compact('cliente','config'));
     }
 }

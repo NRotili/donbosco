@@ -24,7 +24,16 @@
 
     <div class="form-row">
 
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
+            {!! Form::label('porcentajePuntos', 'Porcentaje para puntos') !!}
+            {!! Form::number('porcentajePuntos', null, ['class' => 'form-control']) !!}
+    
+            @error('porcentajePuntos')
+                <span class="text-danger">{{$message}}</span>
+            @enderror
+        </div>
+
+        <div class="form-group col-md-3">
             {!! Form::label('whatsapp', 'Whatsapp') !!}
             {!! Form::text('whatsapp', null, ['class' => 'form-control', 'placeholder' => 'Sin 0 ni 15']) !!}
     
@@ -33,7 +42,7 @@
             @enderror
         </div>
     
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             {!! Form::label('facebook', 'URL del Perfil de Facebook') !!}
             {!! Form::text('facebook', null, ['class' => 'form-control', 'placeholder' => 'https://...']) !!}
     
@@ -42,7 +51,7 @@
             @enderror
         </div>
     
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             {!! Form::label('instagram', 'URL del Perfil de Instagram') !!}
             {!! Form::text('instagram', null, ['class' => 'form-control', 'placeholder' => 'https://...']) !!}
     

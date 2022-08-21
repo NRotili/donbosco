@@ -22,7 +22,6 @@
                             <div class="card-body mb-3">
                                 <div class="card-body">
                                     Puntos por esta venta: {{$puntos}}
-                                    {{$formula->formulaPuntos}}
                                 </div>
                             </div>
                         </div>

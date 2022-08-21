@@ -27,18 +27,14 @@ class VentasCreate extends Component
     public $isDisabledLista;
     public $isDisabledHH;
     public $error;
-
-    public $formula = "Hello World";
-
-
+    public $porcentajeFormula;
 
     public function render()
     {
         $this->productos = Producto::where('status','1')->orderBy('nombre')->get();
         $this->clientes = Cliente::where('habilitado','1')->orderBy('apellido')->orderBy('nombre')->get();
        
-        $this->formula = Config::first();
-        $this->formula->formulaPuntos = eval("str_replace('monto', ".$this->total.", ".$this->formula->formulaPuntos.");");
+        $this->porcentajeFormula = Config::first();
 
         if($this->checkHH){
             $this->isDisabledLista=true;
@@ -126,7 +122,7 @@ class VentasCreate extends Component
             $this->total = $this->subtotal;
 
  
-            // $this->puntos += intval();
+            $this->puntos = intval(($this->porcentajeFormula->porcentajePuntos * $this->total) / 100);
 
             $orderProducts = array(
                 'product_id' => $this->product_id,
@@ -152,7 +148,8 @@ class VentasCreate extends Component
     {
         $this->subtotal = $this->subtotal - $this->orderProducts[$key]['itemtotal'];
         $this->total = $this->subtotal;
-        $this->puntos -= intval((10 *$this->total) /100);
+        
+        $this->puntos = intval((10 *$this->total) /100);
         unset($this->orderProducts[$key]);
         toastr()->title('Información')
                     ->info('Producto eliminado')
@@ -212,7 +209,7 @@ class VentasCreate extends Component
         }
 
         $cliente = Cliente::findOrFail($this->cliente_id);
-        $cliente->puntos += intval((10 *$this->total) /100);
+        $cliente->puntos += intval(($this->porcentajeFormula->porcentajePuntos *$this->total) /100);
         $cliente->update();
 
         toastr()->title('Información')

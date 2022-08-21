@@ -4,7 +4,7 @@
 
 @section('content_header')
 
-    <a href="{{ route('panel.administracion.clientes.index') }}" class="btn btn-secondary float-right">VOLVER</a>
+    <a href="{{ url()->previous() }}" class="btn btn-secondary float-right">VOLVER</a>
 
 
     <h1><u>Cliente:</u> <strong>{{ Str::upper($cliente->apellido) . ', ' . $cliente->nombre }}</strong></h1>

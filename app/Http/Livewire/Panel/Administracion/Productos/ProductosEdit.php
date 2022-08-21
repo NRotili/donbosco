@@ -166,6 +166,9 @@ class ProductosEdit extends Component
 
             $this->producto->update();
 
+            ComboProducto::where('combo_id', $this->producto->id)->delete();
+
+
             foreach ($this->comboProducts as $key => $product) {
     
                 $results = array(

@@ -80,6 +80,7 @@ class ConfigController extends Controller
             'twitter' => 'nullable|url',
             'tiktok' => 'nullable|url',
             'email' => 'nullable|email',
+            'porcentajePuntos' => 'nullable|integer|min:0',
         ]);
 
         $sistema->update($request->all());

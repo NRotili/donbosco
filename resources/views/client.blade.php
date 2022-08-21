@@ -41,7 +41,7 @@
                                 <img src="{{ asset('img/palmera.png') }}" alt="Avatar" class="img-fluid  my-5"
                                     style="width: 80px;" />
                                 <h5>{{ Str::upper($cliente->apellido) }}, {{ $cliente->nombre }}</h5>
-                                <p>Web Designer</p>
+                                <p>Cliente</p>
                                 {{-- <i class="far fa-edit mb-5"></i> --}}
                             </div>
                             <div class="col-md-8">
@@ -73,7 +73,7 @@
                                         </div>
                                         <div class="col-6 mb-3">
                                             <h6>Última compra</h6>
-                                            <p class="text-muted">...</p>
+                                            <p class="text-muted">{{ \Carbon\Carbon::parse($cliente->ventas()->first()->created_at)->format('d/m/Y') }}</p>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start">

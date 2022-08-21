@@ -7,26 +7,61 @@
 @stop
 
 @section('content')
-   <div class="row">
+    <div class="row">
 
-    <div class="col col-12 col-md-4">
-        <x-adminlte-callout theme="info" title-class="text-info text-uppercase"
-    icon="fas fa-lg fa-birthday-cake" title="Cumpleaños de hoy">
-    @if ($clientes->count() != 0)
-        @foreach ($clientes as $cliente)
-         <div class="row">
-            <div class="col col-12 mt-1">
-                {{Str::upper($cliente->apellido)}}, {{$cliente->nombre}}  ({{ \Carbon\Carbon::parse($cliente->fechanacimiento)->age }}) <a target="_blank" href="https://wa.me/+549{{$cliente->telcelular}}" class="btn btn-xs btn-outline-info float-right"><i class="fab fa-whatsapp"></i></a>
-            </div>
-         </div>
-        @endforeach    
-    @else
-        Sin cumpleaños
-    @endif
-    
-</x-adminlte-callout>
+        <div class="col col-12 col-md-3">
+            <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Cumpleaños de hoy">
+                @if ($clientes->count() != 0)
+                    @foreach ($clientes as $cliente)
+                        <div class="row">
+                            <div class="col col-12 mt-1">
+                                {{ Str::upper($cliente->apellido) }}, {{ $cliente->nombre }}
+                                ({{ \Carbon\Carbon::parse($cliente->fechanacimiento)->age }})
+                                <a target="_blank" href="https://wa.me/+549{{ $cliente->telcelular }}"
+                                    class="btn btn-xs btn-outline-info float-right"><i class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    Sin cumpleaños
+                @endif
+
+
+
+            </x-adminlte-callout>
+        </div>
+
+        <div class="col col-12 col-md-3">
+            <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Ventas del día">
+                @if ($ventaHoy > 0)
+                    <strong>$ {{$ventaHoy}}</strong>
+                @else
+                    Sin ventas
+                @endif
+
+            </x-adminlte-callout>
+        </div>
+        <div class="col col-12 col-md-3">
+            <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Ventas del mes">
+                @if ($ventaMes > 0)
+                <strong>$ {{$ventaMes}}</strong>
+            @else
+                Sin ventas
+            @endif
+
+            </x-adminlte-callout>
+        </div>
+        <div class="col col-12 col-md-3">
+            <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Ventas del año">
+                @if ($ventaAnual > 0)
+                <strong>$ {{$ventaAnual}}</strong>
+            @else
+                Sin ventas
+            @endif
+
+            </x-adminlte-callout>
+        </div>
     </div>
-   </div>
 @stop
 
 @section('css')
@@ -34,5 +69,5 @@
 @stop
 
 @section('js')
-   
+
 @stop

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('configs', function (Blueprint $table) {
-            $table->string('formulaPuntos')
+            $table->unsignedBigInteger('porcentajePuntos')
                 ->after('email');
         });
     }
