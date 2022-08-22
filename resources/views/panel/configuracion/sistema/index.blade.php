@@ -22,10 +22,28 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col col-12 col-md-6">
+                <div class="col col-12 col-md-4">
                     <x-adminlte-card title="Porcentaje para puntos" theme="dark" icon="fas fa-lg fa-percentage">
                         @if ($config->porcentajePuntos)
                            {{ $config->porcentajePuntos }}
+                        @else
+                            Sin configurar
+                        @endif
+                    </x-adminlte-card>
+                </div>
+                <div class="col col-12 col-md-4">
+                    <x-adminlte-card title="Alerta stock bajo" theme="dark" icon="fas fa-lg fa-arrow-down">
+                        @if ($config->stockBajo)
+                           {{ $config->stockBajo }}
+                        @else
+                            Sin configurar
+                        @endif
+                    </x-adminlte-card>
+                </div>
+                <div class="col col-12 col-md-4">
+                    <x-adminlte-card title="Alerta stock alto" theme="dark" icon="fas fa-lg fa-arrow-up">
+                        @if ($config->stockAlto)
+                           {{ $config->stockAlto }}
                         @else
                             Sin configurar
                         @endif

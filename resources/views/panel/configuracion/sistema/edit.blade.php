@@ -24,7 +24,7 @@
 
     <div class="form-row">
 
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
             {!! Form::label('porcentajePuntos', 'Porcentaje para puntos') !!}
             {!! Form::number('porcentajePuntos', null, ['class' => 'form-control']) !!}
     
@@ -32,8 +32,30 @@
                 <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
+        <div class="form-group col-md-4">
+            {!! Form::label('stockBajo', 'Alerta de bajo stock') !!}
+            {!! Form::number('stockBajo', null, ['class' => 'form-control']) !!}
+    
+            @error('stockBajo')
+                <span class="text-danger">{{$message}}</span>
+            @enderror
+        </div>
+        <div class="form-group col-md-4">
+            {!! Form::label('stockAlto', 'Alerta de alto stock') !!}
+            {!! Form::number('stockAlto', null, ['class' => 'form-control']) !!}
+    
+            @error('stockAlto')
+                <span class="text-danger">{{$message}}</span>
+            @enderror
+        </div>
 
-        <div class="form-group col-md-3">
+        
+    
+     
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
             {!! Form::label('whatsapp', 'Whatsapp') !!}
             {!! Form::text('whatsapp', null, ['class' => 'form-control', 'placeholder' => 'Sin 0 ni 15']) !!}
     
@@ -42,7 +64,7 @@
             @enderror
         </div>
     
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
             {!! Form::label('facebook', 'URL del Perfil de Facebook') !!}
             {!! Form::text('facebook', null, ['class' => 'form-control', 'placeholder' => 'https://...']) !!}
     
@@ -51,7 +73,7 @@
             @enderror
         </div>
     
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
             {!! Form::label('instagram', 'URL del Perfil de Instagram') !!}
             {!! Form::text('instagram', null, ['class' => 'form-control', 'placeholder' => 'https://...']) !!}
     
@@ -59,8 +81,6 @@
                 <span class="text-danger">{{$message}}</span>
             @enderror
         </div>
-    
-     
     </div>
     
     <div class="form-row">

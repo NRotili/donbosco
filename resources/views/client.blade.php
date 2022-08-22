@@ -73,12 +73,16 @@
                                         </div>
                                         <div class="col-6 mb-3">
                                             <h6>Última compra</h6>
+                                            @if ($cliente->ventas()->count() > 0)
                                             <p class="text-muted">{{ \Carbon\Carbon::parse($cliente->ventas()->first()->created_at)->format('d/m/Y') }}</p>
+                                            @else
+                                            <strong>Sin registros</strong>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start">
                                       @if ($config->whatsapp)
-                                      <a href="https://wa.me/{{ $config->whatsapp }}/"><i
+                                      <a href="https://wa.me/+549{{ $config->whatsapp }}/"><i
                                               class="fab fa-whatsapp fa-lg me-3"></i></a>
                                   @endif
                                         @if ($config->facebook)
