@@ -11,6 +11,15 @@ use Illuminate\Http\Request;
 class ConfigController extends Controller
 {
     
+    public function __construct()
+    {
+        $this->middleware('can:panel.configuracion.sistema.index')->only('index');
+        $this->middleware('can:panel.configuracion.sistema.show')->only('show');
+        $this->middleware('can:panel.configuracion.sistema.create')->only('create','store');
+        $this->middleware('can:panel.configuracion.sistema.edit')->only('edit', 'update');
+        $this->middleware('can:panel.configuracion.sistema.destroy')->only('destroy');
+    }
+
     public function index()
     {
         $config = Config::first();
@@ -35,12 +44,6 @@ class ConfigController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Config $sistema)
     {
         return view('panel.configuracion.sistema.edit', compact('sistema'));

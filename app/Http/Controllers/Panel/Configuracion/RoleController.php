@@ -9,34 +9,28 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+    {
+        $this->middleware('can:panel.configuracion.roles.index')->only('index');
+        $this->middleware('can:panel.configuracion.roles.show')->only('show');
+        $this->middleware('can:panel.configuracion.roles.create')->only('create','store');
+        $this->middleware('can:panel.configuracion.roles.edit')->only('edit', 'update');
+        $this->middleware('can:panel.configuracion.roles.destroy')->only('destroy');
+    }
+
     public function index()
     {
         $roles = Role::all();
         return view('panel.configuracion.roles.index', compact('roles'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         $permissions = Permission::orderBy('description', 'asc')->get();
         return view('panel.configuracion.roles.create', compact('permissions'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -50,36 +44,17 @@ class RoleController extends Controller
         return redirect()->route('panel.configuracion.roles.index', $role)->with('info', 'Rol generado exitosamente');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Role $role)
     {
         $permissions = Permission::orderBy('description', 'asc')->get();
         return view('panel.configuracion.roles.edit', compact('role', 'permissions'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Role $role)
     {
         $request->validate([
@@ -93,12 +68,6 @@ class RoleController extends Controller
   
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Role $role)
     {
         $role->delete();

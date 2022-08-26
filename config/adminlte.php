@@ -271,20 +271,23 @@ return [
         [
             'text' => 'Sistema',
             'route'  => 'panel.configuraciones.sistema.index',
-            'active' => ['configuraciones/sistema*'],
+            'active' => ['panel/configuracion/sistema*'],
+            'can' => 'panel.configuracion.sistema.index',
             'icon' => 'fas fa-fw fa-cogs',
         ],
         [
             'text'    => 'Usuarios',
             'icon'    => 'fas fa-fw fa-users',
-            'active'    =>  ['panel/users*'],
+            'active'    =>  ['panel/configuracion/users*'],
+            'can' => 'panel.configuracion.users.index',
             'route'  => 'panel.configuracion.users.index',
         ],
 
         [
             'text' => 'Roles',
             'icon'  =>  'fas fa-users-cog fa-fw',
-            'active'    =>  ['panel/roles*'],
+            'active'    =>  ['panel/configuracion/roles*'],
+            'can' => 'panel.configuracion.roles.index',
             'route'  => 'panel.configuracion.roles.index',
         ],
         [
@@ -352,7 +355,7 @@ return [
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

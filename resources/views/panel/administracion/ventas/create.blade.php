@@ -17,6 +17,9 @@
 @section('js')
 
     <script>
+
+        
+
         $('.form-delete').submit(function(e) {
             e.preventDefault();
 

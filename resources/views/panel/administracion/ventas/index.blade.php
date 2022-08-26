@@ -3,8 +3,9 @@
 @section('title', 'Ventas')
 
 @section('content_header')
+        @can('panel.administracion.ventas.create')
         <a href="{{ route('panel.administracion.ventas.create') }}" class="btn btn-secondary float-right">Nueva venta</a>
-
+        @endcan
       
 
     <h1>Listado de ventas</h1>

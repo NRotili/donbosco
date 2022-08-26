@@ -16,6 +16,7 @@ class ClientController extends Controller
         $this->middleware('can:panel.administracion.clientes.create')->only('create','store');
         $this->middleware('can:panel.administracion.clientes.edit')->only('edit', 'update');
         $this->middleware('can:panel.administracion.clientes.destroy')->only('destroy');
+        $this->middleware('can:panel.administracion.clientes.plus')->only('plus', 'plusupdate');
     }
 
     public function index()

@@ -55,8 +55,21 @@ class SalesController extends Controller
     }
 
  
-    public function destroy($id)
+    public function destroy(Venta $venta)
     {
-        //
+        if ($venta->status == 1) {
+            $venta->update([
+                'status'=> 0,
+            ]);
+
+          
+            return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de baja.');
+        } else {
+            $venta->update([
+                'status'=> 1,
+            ]);
+
+            return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de alta.');
+        }
     }
 }

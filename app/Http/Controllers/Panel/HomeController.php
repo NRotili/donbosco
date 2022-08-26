@@ -25,11 +25,16 @@ class HomeController extends Controller
         $clientes = Cliente::whereMonth('fechanacimiento', Carbon::now()->format('m'))
             ->whereDay('fechanacimiento', Carbon::now()->format('d'))->get();
 
-
-        $ventaHoy = Venta::whereYear('created_at', Carbon::now()->format('Y'))
-            ->whereMonth('created_at', Carbon::now()->format('m'))
-            ->whereDay('created_at', Carbon::now()->format('d'))
+        if(Carbon::now()->format('H') <= 6){
+            $ventaHoy = Venta::where('status', 1)
+            ->whereBetween('created_at', [Carbon::yesterday()->format('Y-m-d') . " 06:00:01", Carbon::now()->format('Y-m-d') . " 06:00:00"])
             ->sum('total');
+        }else{
+            $ventaHoy = Venta::where('status', 1)
+            ->whereBetween('created_at', [Carbon::now()->format('Y-m-d') . " 06:00:01", Carbon::tomorrow()->format('Y-m-d') . " 06:00:00"])
+            ->sum('total');
+        }
+
 
         $ventaMes = Venta::whereMonth('created_at', Carbon::now()->format('m'))
             ->sum('total');

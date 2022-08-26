@@ -3,9 +3,9 @@
 @section('title', 'Usuarios')
 
 @section('content_header')
-    {{-- @can('panel.roles.create') --}}
+    @can('panel.configuracion.users.create')
         <a href="{{route('panel.configuracion.users.create')}}" class="btn btn-secondary float-right">Nuevo usuario</a>
-    {{-- @endcan --}}
+    @endcan
     <h1>Lista de usuarios</h1>
 @stop
 
@@ -36,8 +36,10 @@
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->email}}</td>
                                 <td width="10px">
+                                    @can('panel.configuracion.users.edit')
                                     <a class="btn btn-warning btn-xs" href="{{ route('panel.configuracion.users.edit', $user) }}"><i
                                         class="fas fa-pen"></i></a>
+                                        @endcan
                                 </td>
                             </tr>
                         @endforeach

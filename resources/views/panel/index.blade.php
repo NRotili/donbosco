@@ -9,63 +9,72 @@
 @section('content')
     <div class="row">
 
-        <div class="col col-12 col-md-3">
-            <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Cumpleaños de hoy">
-                @if ($clientes->count() != 0)
-                    @foreach ($clientes as $cliente)
-                        <div class="row">
-                            <div class="col col-12 mt-1">
-                                {{ Str::upper($cliente->apellido) }}, {{ $cliente->nombre }}
-                                ({{ \Carbon\Carbon::parse($cliente->fechanacimiento)->age }})
-                                <a target="_blank" href="https://wa.me/+549{{ $cliente->telcelular }}"
-                                    class="btn btn-xs btn-outline-info float-right"><i class="fab fa-whatsapp"></i></a>
+        @can('panel.dashboard.cumpleaños')
+            <div class="col col-12 col-md-3">
+                <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Cumpleaños de hoy">
+                    @if ($clientes->count() != 0)
+                        @foreach ($clientes as $cliente)
+                            <div class="row">
+                                <div class="col col-12 mt-1">
+                                    {{ Str::upper($cliente->apellido) }}, {{ $cliente->nombre }}
+                                    ({{ \Carbon\Carbon::parse($cliente->fechanacimiento)->age }})
+                                    <a target="_blank" href="https://wa.me/+549{{ $cliente->telcelular }}"
+                                        class="btn btn-xs btn-outline-info float-right"><i class="fab fa-whatsapp"></i></a>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
-                @else
-                    Sin cumpleaños
-                @endif
+                        @endforeach
+                    @else
+                        Sin cumpleaños
+                    @endif
 
 
 
-            </x-adminlte-callout>
-        </div>
+                </x-adminlte-callout>
+            </div>
+        @endcan
 
-        <div class="col col-12 col-md-3">
-            <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Ventas del día">
-                @if ($ventaHoy > 0)
-                    <strong>$ {{ $ventaHoy }}</strong>
-                @else
-                    Sin ventas
-                @endif
+        @can('panel.dashboard.ventasdia')
+            <div class="col col-12 col-md-3">
+                <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Ventas del día">
+                    @if ($ventaHoy > 0)
+                        <strong>$ {{ $ventaHoy }}</strong>
+                    @else
+                        Sin ventas
+                    @endif
 
-            </x-adminlte-callout>
-        </div>
-        <div class="col col-12 col-md-3">
-            <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Ventas del mes">
-                @if ($ventaMes > 0)
-                    <strong>$ {{ $ventaMes }}</strong>
-                @else
-                    Sin ventas
-                @endif
+                </x-adminlte-callout>
+            </div>
+        @endcan
+        @can('panel.dashboard.ventasmes')
+            <div class="col col-12 col-md-3">
+                <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Ventas del mes">
+                    @if ($ventaMes > 0)
+                        <strong>$ {{ $ventaMes }}</strong>
+                    @else
+                        Sin ventas
+                    @endif
 
-            </x-adminlte-callout>
-        </div>
-        <div class="col col-12 col-md-3">
-            <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Ventas del año">
-                @if ($ventaAnual > 0)
-                    <strong>$ {{ $ventaAnual }}</strong>
-                @else
-                    Sin ventas
-                @endif
+                </x-adminlte-callout>
+            </div>
+        @endcan
+        @can('panel.dashboard.ventasaño')
+            <div class="col col-12 col-md-3">
+                <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Ventas del año">
+                    @if ($ventaAnual > 0)
+                        <strong>$ {{ $ventaAnual }}</strong>
+                    @else
+                        Sin ventas
+                    @endif
 
-            </x-adminlte-callout>
-        </div>
+                </x-adminlte-callout>
+            </div>
+        @endcan
     </div>
     {{-- Productos alto/bajo stock --}}
     <div class="row">
         <div class="col col-12 col-md-6">
-            <x-adminlte-card title="Productos con stock bajo" theme="info" icon="fas fa-lg fa-arrow-down" collapsible="collapsed">
+            <x-adminlte-card title="Productos con stock bajo" theme="info" icon="fas fa-lg fa-arrow-down"
+                collapsible="collapsed">
                 @if ($productosBajoStock->count() > 0)
 
                     <table class="table table-striped">
@@ -102,7 +111,8 @@
         </div>
 
         <div class="col col-12 col-md-6">
-            <x-adminlte-card title="Productos con stock alto" theme="info" icon="fas fa-lg fa-arrow-up" collapsible="collapsed">
+            <x-adminlte-card title="Productos con stock alto" theme="info" icon="fas fa-lg fa-arrow-up"
+                collapsible="collapsed">
                 @if ($productosAltoStock->count() > 0)
 
                     <table class="table table-striped">
@@ -142,7 +152,8 @@
     {{-- Top 5 productos --}}
     <div class="row">
         <div class="col col-12 col-md-6">
-            <x-adminlte-card title="Top 5 más vendidos" theme="info" icon="fas fa-lg fa-shopping-cart" collapsible="collapsed">
+            <x-adminlte-card title="Top 5 más vendidos" theme="info" icon="fas fa-lg fa-shopping-cart"
+                collapsible="collapsed">
                 @if ($productosBajoStock->count() > 0)
 
                     <table class="table table-striped">
@@ -157,17 +168,17 @@
                         </thead>
                         <tbody>
                             @foreach ($topsales as $top)
-                            <tr>
-                                <th scope="row"><a
-                                        href="{{ route('panel.administracion.productos.show', $top->id) }}">{{ $top->id }}</a>
-                                </th>
-                                <td>{{ $top->nombre }}</td>
-                                <td>{{ $top->total }}</td>
+                                <tr>
+                                    <th scope="row"><a
+                                            href="{{ route('panel.administracion.productos.show', $top->id) }}">{{ $top->id }}</a>
+                                    </th>
+                                    <td>{{ $top->nombre }}</td>
+                                    <td>{{ $top->total }}</td>
 
-                            </tr>
-                        @endforeach
+                                </tr>
+                            @endforeach
 
-                       
+
                         </tbody>
 
                     </table>
@@ -175,7 +186,7 @@
                     <strong>No hay productos para mostrar</strong>
                 @endif
             </x-adminlte-card>
-            
+
         </div>
 
     </div>

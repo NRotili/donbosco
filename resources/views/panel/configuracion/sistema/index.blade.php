@@ -4,9 +4,10 @@
 
 @section('content_header')
 
-    <a href="{{ route('panel.configuraciones.sistema.edit', $config) }}" class="btn btn-secondary float-right">Editar
-        información</a>
-
+    @can('panel.configuracion.sistema.edit')
+        <a href="{{ route('panel.configuraciones.sistema.edit', $config) }}" class="btn btn-secondary float-right">Editar
+            información</a>
+    @endcan
 
     <h1>Datos del sistema</h1>
 @stop

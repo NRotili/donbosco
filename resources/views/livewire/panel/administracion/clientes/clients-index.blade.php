@@ -73,28 +73,32 @@
                                         @endif
                                     </td>
                                     <td width="10px">
+                                        @can('panel.administracion.clientes.show')
                                         <a href="{{ route('panel.administracion.clientes.show', $cliente) }}"
-                                            class="btn btn-info btn-xs"><i class="mx-1 fas fa-info"></i></a>
+                                        class="btn btn-info btn-xs"><i class="mx-1 fas fa-info"></i></a>
+                                        @endcan
                                     </td>
 
-
                                     <td width="10px">
+                                        @can('panel.administracion.clientes.plus')
                                         <a class="btn btn-secondary btn-xs @if ($cliente->habilitado == 0) disabled @endif"
                                             href="{{ route('panel.administracion.clientes.plus', $cliente) }}"><i
                                                 class="fas fa-plus"></i></a>
-
+                                        @endcan
                                     </td>
 
                                     <td width="10px">
+                                        @can('panel.administracion.clientes.edit')
                                         <a class="btn btn-warning btn-xs @if ($cliente->habilitado == 0) disabled @endif"
                                             href="{{ route('panel.administracion.clientes.edit', $cliente) }}"><i
                                                 class="fas fa-pen"></i>
                                         </a>
 
-
+                                        @endcan
                                     </td>
 
                                     <td width="10px">
+                                        @can('panel.administracion.clientes.destroy')
                                         <form class="@if ($cliente->habilitado == 0) form-up @else form-delete @endif"
                                             action="{{ route('panel.administracion.clientes.destroy', $cliente->id) }}"
                                             method="POST">
@@ -104,9 +108,9 @@
                                             <button
                                                 class="btn btn-xs @if ($cliente->habilitado == 0) btn-success @else btn-danger @endif"
                                                 type="submit"><i
-                                                    class="fas @if ($cliente->habilitado == 0) fa-arrow-up @else fa-trash @endif"></i></button>
+                                                    class="fas @if ($cliente->habilitado == 0) fa-arrow-up @else fa-arrow-down @endif"></i></button>
                                         </form>
-
+                                        @endcan
                                     </td>
 
 

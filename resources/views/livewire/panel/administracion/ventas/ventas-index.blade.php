@@ -65,15 +65,18 @@
                                         <td>{{ Str::upper($venta->cliente->apellido) }}, {{ $venta->cliente->nombre }}</td>
  
                                         <td width="10px">
+                                            @can('panel.administracion.ventas.show')
                                             <a href="{{ route('panel.administracion.ventas.show', $venta) }}"
                                                 class="btn btn-info btn-xs"><i class="mx-1 fas fa-info"></i></a>
+                                            @endcan
                                         </td>
     
                                       
     
                                         <td width="10px">
+                                            @can('panel.administracion.ventas.show')
                                             <form class="@if ($venta->status == 0) form-up @else form-delete @endif"
-                                                action="{{ route('panel.administracion.clientes.destroy', $venta->id) }}"
+                                                action="{{ route('panel.administracion.ventas.destroy', $venta) }}"
                                                 method="POST">
                                                 @csrf
                                                 @method('delete')
@@ -81,8 +84,9 @@
                                                 <button
                                                     class="btn btn-xs @if ($venta->status == 0) btn-success @else btn-danger @endif"
                                                     type="submit"><i
-                                                        class="fas @if ($venta->status == 0) fa-arrow-up @else fa-trash @endif"></i></button>
+                                                        class="fas @if ($venta->status == 0) fa-arrow-up @else fa-arrow-down @endif"></i></button>
                                             </form>
+                                            @endcan
     
                                         </td>
     

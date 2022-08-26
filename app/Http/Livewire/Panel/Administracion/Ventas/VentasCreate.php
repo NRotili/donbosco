@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Panel\Administracion\Ventas;
 
 use App\Models\Cliente;
 use App\Models\Config;
+use App\Models\Mediopago;
 use App\Models\Producto;
 use App\Models\ProductoVenta;
 use App\Models\Venta;
@@ -28,12 +29,22 @@ class VentasCreate extends Component
     public $isDisabledHH;
     public $error;
     public $porcentajeFormula;
+    // Medio de pago
+    public $mediosdepago,$mediopago_anterior = 0, $mediopago_id, $recargo;
 
     public function render()
     {
         $this->productos = Producto::where('status','1')->orderBy('nombre')->get();
         $this->clientes = Cliente::where('habilitado','1')->orderBy('apellido')->orderBy('nombre')->get();
-       
+        // Medio de pago
+        $this->mediosdepago = Mediopago::orderBy('nombre')->get();
+        
+        if($this->mediopago_id != null && $this->mediopago_id != $this->mediopago_anterior){
+            $mediopago = Mediopago::findOrFail($this->mediopago_id);
+            $this->mediopago_anterior = $this->mediopago_id;
+            $this->recargo = $mediopago->recargo;
+        }
+
         $this->porcentajeFormula = Config::first();
 
         if($this->checkHH){
@@ -119,7 +130,12 @@ class VentasCreate extends Component
                 $this->itemtotal = floatval($this->cantidad) * floatval($this->preciolista);
             }
             $this->subtotal = floatval($this->subtotal) + floatval($this->itemtotal);
-            $this->total = $this->subtotal;
+
+            if ($this->recargo >= 0) {
+                $this->total = $this->subtotal + (($this->recargo*$this->subtotal)/100);
+            } else {
+                $this->total = $this->subtotal - (($this->recargo*$this->subtotal)/100);
+            }
 
  
             $this->puntos = intval(($this->porcentajeFormula->porcentajePuntos * $this->total) / 100);
@@ -147,7 +163,12 @@ class VentasCreate extends Component
     public function removeItem($key)
     {
         $this->subtotal = $this->subtotal - $this->orderProducts[$key]['itemtotal'];
-        $this->total = $this->subtotal;
+        if ($this->recargo >= 0) {
+            $this->total = $this->subtotal + (($this->recargo*$this->subtotal)/100);
+        } else {
+            $this->total = $this->subtotal - (($this->recargo*$this->subtotal)/100);
+
+        }
         
         $this->puntos = intval((10 *$this->total) /100);
         unset($this->orderProducts[$key]);
