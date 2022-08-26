@@ -16,6 +16,7 @@ class ClientsIndex extends Component
     public $telcelular;
     public $qr;
     public $apellido;
+    
 
     public function updatingNombre()
     {

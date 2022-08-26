@@ -4,13 +4,17 @@ namespace App\Http\Livewire\Panel\Administracion\Productos;
 
 use App\Models\Producto;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ProductosIndex extends Component
 {
+    use WithPagination;
+
     //Filtro
     public $codigo, $nombre, $detalle;
     //Modal
     public $idModal, $titleModal,$stockModal, $stock;
+    protected $paginationTheme = "bootstrap";
 
     public function render()
     {

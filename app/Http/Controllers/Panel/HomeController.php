@@ -36,10 +36,12 @@ class HomeController extends Controller
         }
 
 
-        $ventaMes = Venta::whereMonth('created_at', Carbon::now()->format('m'))
+        $ventaMes = Venta::where('status', 1)
+            ->whereMonth('created_at', Carbon::now()->format('m'))
             ->sum('total');
 
-        $ventaAnual = Venta::whereYear('created_at', Carbon::now()->format('Y'))
+        $ventaAnual = Venta::where('status', 1)
+            ->whereYear('created_at', Carbon::now()->format('Y'))
             ->sum('total');
 
         $productosBajoStock = Producto::where('status', 1)

@@ -26,7 +26,7 @@ Route::get('panel', [HomeController::class, 'index']);
 
 Route::get('client/{qr}', [ClientController::class, 'index'])->name('client');
 
-Route::get('/migrate', function(){
-    \Illuminate\Support\Facades\Artisan::call('migrate');
+Route::get('migrate', function(){
+    \Illuminate\Support\Facades\Artisan::call('migrate --force');
     dd('migrated!');
 });

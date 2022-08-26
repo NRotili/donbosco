@@ -30,7 +30,7 @@ class VentasCreate extends Component
     public $error;
     public $porcentajeFormula;
     // Medio de pago
-    public $mediosdepago,$mediopago_anterior = 0, $mediopago_id, $recargo;
+    public $mediosdepago, $mediopago_anterior = 0, $mediopago_id, $recargo;
 
     public function render()
     {
@@ -44,9 +44,12 @@ class VentasCreate extends Component
             $this->mediopago_anterior = $this->mediopago_id;
             $this->recargo = $mediopago->recargo;
         }
+        //Agrego recargo o descuento al total
+        $this->total = $this->subtotal + (($this->recargo*$this->subtotal)/100);
 
         $this->porcentajeFormula = Config::first();
 
+        //Check de happy hour
         if($this->checkHH){
             $this->isDisabledLista=true;
             $this->isDisabledHH=false;
@@ -130,13 +133,6 @@ class VentasCreate extends Component
                 $this->itemtotal = floatval($this->cantidad) * floatval($this->preciolista);
             }
             $this->subtotal = floatval($this->subtotal) + floatval($this->itemtotal);
-
-            if ($this->recargo >= 0) {
-                $this->total = $this->subtotal + (($this->recargo*$this->subtotal)/100);
-            } else {
-                $this->total = $this->subtotal - (($this->recargo*$this->subtotal)/100);
-            }
-
  
             $this->puntos = intval(($this->porcentajeFormula->porcentajePuntos * $this->total) / 100);
 
@@ -163,12 +159,6 @@ class VentasCreate extends Component
     public function removeItem($key)
     {
         $this->subtotal = $this->subtotal - $this->orderProducts[$key]['itemtotal'];
-        if ($this->recargo >= 0) {
-            $this->total = $this->subtotal + (($this->recargo*$this->subtotal)/100);
-        } else {
-            $this->total = $this->subtotal - (($this->recargo*$this->subtotal)/100);
-
-        }
         
         $this->puntos = intval((10 *$this->total) /100);
         unset($this->orderProducts[$key]);
@@ -198,7 +188,8 @@ class VentasCreate extends Component
 
         $order = Venta::create([
             'total' => $this->total,
-            'cliente_id' => $this->cliente_id
+            'cliente_id' => $this->cliente_id,
+            'mediopago_id' => $this->mediopago_id
         ]);
 
         foreach ($this->orderProducts as $key => $product) {

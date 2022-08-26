@@ -66,7 +66,7 @@
                             <label for="metodopago">Seleccione método de pago:</label>
                             <select wire:model="mediopago_id" name="" id="metodopago"
                                 class="form-control form-control-sm">
-                                <option value="">Seleccione método</option>
+                                <option value="" hidden>Seleccione método</option>
                                 @foreach ($mediosdepago as $mp)
                                     <option value="{{ $mp->id }}">
                                         {{ $mp->nombre }}</option>
@@ -79,7 +79,7 @@
                         <div class="col col-12 col-md-3">
                             <label for="porcentaje">Porcentaje:</label>
                             <input type="number" class="form-control form-control-sm" name="" id="porcentaje"
-                            wire:model="recargo">
+                            wire:model.lazy="recargo">
                             
                         </div>
                     </div>
