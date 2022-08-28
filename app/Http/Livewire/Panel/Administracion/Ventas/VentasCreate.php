@@ -35,10 +35,10 @@ class VentasCreate extends Component
 
     public function mount()
     {
-        if (Carbon::now()->format('H:i') <= '23:30') {
+        if (Carbon::now()->format('H:i') <= '23:30' && Carbon::now()->format('H:i') >= '07:00' ) {
             $this->checkHH = true;
             $this->selected_id = 4;
-        } elseif (Carbon::now()->format('H:i') >= '23:30' && Carbon::now()->format('H:i') <= '07:00') {
+        } else {
             $this->selected_id = 5;
         }
         

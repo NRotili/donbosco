@@ -23,6 +23,7 @@
                                         </p>
                                         <p class="ml-5">Puntos por esta venta: <strong>{{ $puntos }}</strong>
                                         </p>
+                                        {{\Carbon\Carbon::now()->format('H:i')}}
                                     </div>
                                 </div>
 
