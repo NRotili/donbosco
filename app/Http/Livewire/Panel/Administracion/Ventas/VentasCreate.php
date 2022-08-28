@@ -8,9 +8,10 @@ use App\Models\Mediopago;
 use App\Models\Producto;
 use App\Models\ProductoVenta;
 use App\Models\Venta;
+use Carbon\Carbon;
 use Livewire\Component;
 use Flasher\Toastr\Prime\ToastrFactory;
-
+use Illuminate\Support\Facades\Validator;
 
 class VentasCreate extends Component
 {
@@ -32,30 +33,44 @@ class VentasCreate extends Component
     // Medio de pago
     public $mediosdepago, $mediopago_anterior = 0, $mediopago_id, $recargo;
 
-    public function render()
+    public function mount()
     {
-        $this->productos = Producto::where('status','1')->orderBy('nombre')->get();
-        $this->clientes = Cliente::where('habilitado','1')->orderBy('apellido')->orderBy('nombre')->get();
+        if (Carbon::now()->format('H:i') <= '23:30') {
+            $this->checkHH = true;
+            $this->selected_id = 4;
+        } elseif (Carbon::now()->format('H:i') >= '23:30' && Carbon::now()->format('H:i') <= '07:00') {
+            $this->selected_id = 5;
+        }
+        
+        //Cargo productos
+        $this->productos = Producto::where('status', '1')->orderBy('nombre')->get();
+        // Cargo clientes
+        $this->clientes = Cliente::where('habilitado', '1')->orderBy('apellido')->orderBy('nombre')->get();
         // Medio de pago
         $this->mediosdepago = Mediopago::orderBy('nombre')->get();
-        
-        if($this->mediopago_id != null && $this->mediopago_id != $this->mediopago_anterior){
+        //Obtengo configuración del sistema
+        $this->porcentajeFormula = Config::first();
+
+    }
+
+    public function render()
+    {
+
+        if ($this->mediopago_id != null && $this->mediopago_id != $this->mediopago_anterior) {
             $mediopago = Mediopago::findOrFail($this->mediopago_id);
             $this->mediopago_anterior = $this->mediopago_id;
             $this->recargo = $mediopago->recargo;
         }
         //Agrego recargo o descuento al total
-        $this->total = $this->subtotal + (($this->recargo*$this->subtotal)/100);
-
-        $this->porcentajeFormula = Config::first();
+        $this->total = $this->subtotal + (($this->recargo * $this->subtotal) / 100);
 
         //Check de happy hour
-        if($this->checkHH){
-            $this->isDisabledLista=true;
-            $this->isDisabledHH=false;
+        if ($this->checkHH) {
+            $this->isDisabledLista = true;
+            $this->isDisabledHH = false;
         } else {
-            $this->isDisabledLista=false;
-            $this->isDisabledHH=true;
+            $this->isDisabledLista = false;
+            $this->isDisabledHH = true;
         }
 
         if ($this->product_id != null) {
@@ -98,33 +113,33 @@ class VentasCreate extends Component
         $this->error = 0;
         if ($this->product_id == '' || $this->cantidad == '' || $this->preciolista == '' || $this->preciohappyhour == '') {
             toastr()->title('Validación de campos')
-                    ->error('Complete todos los campos')
-                    ->timeOut(3000)
-                    ->progressBar()
-                    ->flash();
+                ->error('Complete todos los campos')
+                ->timeOut(3000)
+                ->progressBar()
+                ->flash();
             $this->error = 1;
         } elseif ($this->itemCostos->combo) {
             foreach ($this->itemCostos->contproductos as $productocombo) {
                 if ($productocombo->stock < ($productocombo->pivot->cantidad * $this->cantidad)) {
                     toastr()->title('Comprobación de stock')
-                    ->error("Stock de $productocombo->nombre insuficiente.")
-                    ->timeOut(3000)
-                    ->progressBar()
-                    ->flash();
+                        ->error("Stock de $productocombo->nombre insuficiente.")
+                        ->timeOut(3000)
+                        ->progressBar()
+                        ->flash();
 
                     $this->error = 1;
                 }
             }
         } elseif (!$this->itemCostos->combo && ($this->itemCostos->stock < $this->cantidad)) {
             toastr()->title('Comprobación de stock')
-                    ->error('Stock insuficiente')
-                    ->timeOut(3000)
-                    ->progressBar()
-                    ->flash();
+                ->error('Stock insuficiente')
+                ->timeOut(3000)
+                ->progressBar()
+                ->flash();
             $this->error = 1;
         }
-        
-        if($this->error == 0){
+
+        if ($this->error == 0) {
             $product = Producto::find($this->product_id);
             $name = $product->nombre;
             if ($this->checkHH == 1) {
@@ -133,7 +148,7 @@ class VentasCreate extends Component
                 $this->itemtotal = floatval($this->cantidad) * floatval($this->preciolista);
             }
             $this->subtotal = floatval($this->subtotal) + floatval($this->itemtotal);
- 
+
             $this->puntos = intval(($this->porcentajeFormula->porcentajePuntos * $this->total) / 100);
 
             $orderProducts = array(
@@ -146,45 +161,53 @@ class VentasCreate extends Component
             );
             $this->orderProducts[] = $orderProducts;
             toastr()->title('Información')
-                    ->info('Producto añadido')
-                    ->timeOut(2000)
-                    ->progressBar()
-                    ->flash();
+                ->info('Producto añadido')
+                ->timeOut(2000)
+                ->progressBar()
+                ->flash();
 
             $this->resetInput();
         }
-        
     }
 
     public function removeItem($key)
     {
         $this->subtotal = $this->subtotal - $this->orderProducts[$key]['itemtotal'];
-        
-        $this->puntos = intval((10 *$this->total) /100);
+
+        $this->puntos = intval((10 * $this->total) / 100);
         unset($this->orderProducts[$key]);
         toastr()->title('Información')
-                    ->info('Producto eliminado')
-                    ->timeOut(2000)
-                    ->progressBar()
-                    ->flash();
+            ->info('Producto eliminado')
+            ->timeOut(2000)
+            ->progressBar()
+            ->flash();
     }
 
     public function storeOrder()
-
-
     {
-        if ($this->cliente_id == '') {
+
+        $validatedData = Validator::make(
+            [
+                'cliente' => $this->selected_id,
+                'medio_de_pago' => $this->mediopago_id,
+                'productos' => $this->orderProducts
+            ],
+            [
+                'cliente' => 'required',
+                'medio_de_pago' => 'required',
+                'productos' => 'array|min:1'
+            ],
+        );
+
+        if ($validatedData->fails()) {
             toastr()->title('Validación de campos')
-                    ->error('Seleccione un cliente')
-                    ->timeOut(3000)
-                    ->progressBar()
-                    ->flash();
+                ->error('Hay campos obligatorios sin completar')
+                ->timeOut(3000)
+                ->progressBar()
+                ->flash();
         }
 
-        $this->validate([
-            'cliente_id' => 'required',
-        ]);
-
+        $validatedData->validate();
 
         $order = Venta::create([
             'total' => $this->total,
@@ -194,7 +217,7 @@ class VentasCreate extends Component
 
         foreach ($this->orderProducts as $key => $product) {
             $item = Producto::find($product['product_id']);
-            
+
             $results = array(
                 'producto_id' => $product['product_id'],
                 'venta_id' => $order->id,
@@ -204,7 +227,6 @@ class VentasCreate extends Component
                 'created_at' => now(),
                 'updated_at' => now()
             );
-
 
             ProductoVenta::insert($results);
 
@@ -217,25 +239,24 @@ class VentasCreate extends Component
                     $producto->update();
                 }
             }
-            
         }
 
         $cliente = Cliente::findOrFail($this->cliente_id);
-        $cliente->puntos += intval(($this->porcentajeFormula->porcentajePuntos *$this->total) /100);
+        $cliente->puntos += intval(($this->porcentajeFormula->porcentajePuntos * $this->total) / 100);
         $cliente->update();
 
         toastr()->title('Información')
-                ->success('Stock y puntos del cliente actualizados')
-                ->timeOut(2000)
-                ->progressBar()
-                ->flash();
+            ->success('Stock y puntos del cliente actualizados')
+            ->timeOut(2000)
+            ->progressBar()
+            ->flash();
 
         toastr()->title('Información')
-                ->success('Venta generada')
-                ->timeOut(3000)
-                ->progressBar()
-                ->flash();
-                
+            ->success('Venta generada')
+            ->timeOut(3000)
+            ->progressBar()
+            ->flash();
+
         return redirect()->route('panel.administracion.ventas.index');
     }
 }

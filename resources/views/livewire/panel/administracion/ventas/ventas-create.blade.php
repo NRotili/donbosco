@@ -46,9 +46,9 @@
                                                     {{ $cliente->apellido . ', ' . $cliente->nombre }}</option>
                                             @endforeach
                                         </select>
-                                        @error('selected_id')
-                                            <span class="error">{{ $message }}</span>
-                                        @enderror
+                                        @if($errors->has('cliente'))
+                                            <small class="text-danger">{{$errors->first('cliente')}}</small>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -72,9 +72,9 @@
                                         {{ $mp->nombre }}</option>
                                 @endforeach
                             </select>
-                            @error('selected_id')
-                                <span class="error">{{ $message }}</span>
-                            @enderror
+                            @if($errors->has('medio_de_pago'))
+                            <small class="text-danger">{{$errors->first('medio_de_pago')}}</small>
+                            @endif
                         </div>
                         <div class="col col-12 col-md-3">
                             <label for="porcentaje">Porcentaje:</label>
@@ -192,6 +192,9 @@
                         <p class="text-right mb-2">IVA: $0</p>
                         <h4 class="text-right mb-2">Total: ${{ $total }}</h4>
                     </div>
+                    @if($errors->has('productos'))
+                            <small class="text-danger">{{$errors->first('productos')}}</small>
+                    @endif
                 </div>
             </div>
         </div>
