@@ -52,6 +52,6 @@ class HomeController extends Controller
             ->limit(5)
             ->get();
 
-        return view('panel.index', compact('clientes', 'ventaHoy', 'ventaMes', 'ventaAnual', 'productosBajoStock', 'productosAltoStock', 'topsales'));
+        return view('panel.index', compact('clientes', 'productosBajoStock', 'productosAltoStock', 'topsales'));
     }
 }
