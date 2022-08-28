@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Panel\Administracion\Clientes\ClientController;
+use App\Http\Controllers\Panel\Administracion\Finanzas\FinanzaController;
 use App\Http\Controllers\Panel\Administracion\Productos\ProductoController;
 use App\Http\Controllers\Panel\Administracion\Ventas\SalesController;
 use App\Http\Controllers\Panel\Configuracion\RoleController;
@@ -33,6 +34,8 @@ Route::resource('configuracion/roles', RoleController::class)->names('panel.conf
 
 Route::get('administracion/clientes/{id}/plus',[ClientController::class, 'plus'])->name('panel.administracion.clientes.plus');
 Route::put('administracion/clientes/plusupdate/{cliente}',[ClientController::class, 'plusupdate'])->name('panel.administracion.clientes.plusupdate');
+
+Route::get('administracion/finanzas', [FinanzaController::class, 'index'])->name('panel.administracion.finanzas.index');
 
 
 

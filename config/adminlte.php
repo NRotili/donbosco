@@ -267,6 +267,13 @@ return [
             'can' => 'panel.administracion.productos.index',
             'icon' => 'fas fa-fw fa-pallet',
         ],
+        [
+            'text' => 'Finanzas',
+            'route'  => 'panel.administracion.finanzas.index',
+            'active' =>['panel/administracion/finanzas*'],
+            'can' => 'panel.administracion.finanzas.index',
+            'icon' => 'fas fa-fw fa-dollar-sign',
+        ],
         ['header' => 'CONFIGURACIONES'],
         [
             'text' => 'Sistema',
