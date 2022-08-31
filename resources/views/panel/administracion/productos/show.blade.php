@@ -13,7 +13,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col col-12 col-md-6">
+        <div class="col col-12 col-md-3">
             <x-adminlte-info-box title="Detalle del producto" text="{{ $producto->detalle }}" icon="fas fa-lg fa-info" />
         </div>
         <div class="col col-12 col-md-3">
@@ -25,11 +25,16 @@
         </div>
         <div class="col col-12 col-md-3">
             @if ($producto->status)
-                <x-adminlte-info-box title="Status" text="Publicado" icon="far fa-lg fa-calendar" />
+                <x-adminlte-info-box title="Status" text="Publicado" icon="fas fa-lg fa-check" />
             @else
-                <x-adminlte-info-box title="Status" text="Deshabilitado" icon="far fa-lg fa-calendar" />
+                <x-adminlte-info-box title="Status" text="Deshabilitado" icon="fas fa-lg fa-check" />
             @endif
 
+        </div>
+        <div class="col col-12 col-md-3">
+
+                <x-adminlte-info-box title="Ventas mes actual" text="{{$cantidad}}" icon="far fa-lg fa-calendar" />
+         
         </div>
     </div>
     <div class="row">

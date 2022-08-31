@@ -25,14 +25,14 @@ class VentasIndex extends Component
     public function render()
     {
         $ventas = Venta::where('created_at', 'LIKE', '%' . $this->date . '%')
-        ->whereHas('cliente', function (Builder $query) {
+            ->whereHas('cliente', function (Builder $query) {
             $query->where('apellido', 'LIKE' , '%' . $this->apellido . '%');
             $query->where('nombre', 'LIKE', '%' . $this->nombre . '%');
             $query->where('telcelular', 'LIKE', '%' . $this->telcelular . '%');
 
         })
   
-        ->orderByDesc('id')
+        ->orderByDesc('created_at')
         ->paginate();
         
         return view('livewire.panel.administracion.ventas.ventas-index', compact('ventas'));

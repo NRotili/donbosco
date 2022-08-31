@@ -86,6 +86,30 @@
 
                 </div>
             </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col col-12 col-md-12">
+                            <label for="fecha">Seleccione fecha de venta:</label>
+                            <div class="row">
+                                <div class="col col-md-6">
+
+                                    <input class="form-control" wire:model="fecha" type="date" value="" name="" id="">
+                                </div>
+                                <div class="col col-md-6">
+                                    <input class="form-control" wire:model="hora" type="time" value="" name="" id="">
+                                </div>
+
+                            </div>
+                            @if($errors->has('medio_de_pago'))
+                            <small class="text-danger">{{$errors->first('medio_de_pago')}}</small>
+                            @endif
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 
@@ -202,7 +226,7 @@
 
     {{-- Botón guardar --}}
     <div class="mb-5 mt-1 ">
-        <button type="submit" class="btn btn-block btn-success" wire:click.prevent="storeOrder()">Guardar</button>
+        <button type="submit" wire:loading.attr="disabled" class="btn btn-block btn-success" wire:click.prevent="storeOrder()">Guardar</button>
     </div>
 
 

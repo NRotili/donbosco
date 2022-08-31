@@ -32,6 +32,7 @@ class VentasCreate extends Component
     public $porcentajeFormula;
     // Medio de pago
     public $mediosdepago, $mediopago_anterior = 0, $mediopago_id, $recargo;
+    public $fecha, $hora;
 
     public function mount()
     {
@@ -41,6 +42,9 @@ class VentasCreate extends Component
         } else {
             $this->selected_id = 5;
         }
+
+        $this->fecha = Carbon::now()->format('Y-m-d');
+        $this->hora = Carbon::now()->format('H:i');
         
         //Cargo productos
         $this->productos = Producto::where('status', '1')->orderBy('nombre')->get();
@@ -212,7 +216,9 @@ class VentasCreate extends Component
         $order = Venta::create([
             'total' => $this->total,
             'cliente_id' => $this->cliente_id,
-            'mediopago_id' => $this->mediopago_id
+            'mediopago_id' => $this->mediopago_id,
+            'created_at' => $this->fecha ." ".$this->hora,
+            'updated_at' => $this->fecha ." ".$this->hora
         ]);
 
         foreach ($this->orderProducts as $key => $product) {
@@ -224,8 +230,8 @@ class VentasCreate extends Component
                 'preciocosto' => $item->preciocosto,
                 'preciovendido' => $product['itemtotal'] / $product['cantidad'],
                 'cantidad' => $product['cantidad'],
-                'created_at' => now(),
-                'updated_at' => now()
+                'created_at' => $this->fecha ." ".$this->hora,
+                'updated_at' => $this->fecha ." ".$this->hora
             );
 
             ProductoVenta::insert($results);

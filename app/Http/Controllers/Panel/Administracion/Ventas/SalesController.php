@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Panel\Administracion\Ventas;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProductoVenta;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 
@@ -62,14 +63,44 @@ class SalesController extends Controller
                 'status'=> 0,
             ]);
 
-          
-            return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de baja.');
+            
+            //Deshabilito venta_producto en pivote y aumento stock de los productos.
+            foreach ($venta->productos as $producto) {
+                $venta->productos()->updateExistingPivot([$producto->id], ['status' => 0]);
+                if (!$producto->combo) {
+                    $producto->stock += $producto->pivot->cantidad;
+                    $producto->update();
+                    
+                } else {
+                    foreach ($producto->contproductos as $productocbo) {
+                        $productocbo->stock += $productocbo->pivot->cantidad * $producto->pivot->cantidad;
+                        $productocbo->update();
+                    }
+                }  
+            }
+            // return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de baja.');
         } else {
             $venta->update([
                 'status'=> 1,
             ]);
+            //Habilito venta_producto en pivote y decremento stock de los productos.
+            foreach ($venta->productos as $producto) {
+                $venta->productos()->updateExistingPivot([$producto->id], ['status' => 1]);
+                if (!$producto->combo) {
+                    $producto->stock -= $producto->pivot->cantidad;
+                    $producto->update();
+                    
+                } else {
 
-            return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de alta.');
+
+                    foreach ($producto->contproductos as $productocbo) {
+                        $productocbo->stock -= $productocbo->pivot->cantidad * $producto->pivot->cantidad;
+                        $productocbo->update();
+
+                    }
+                }  
+            }
+            // return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de alta.');
         }
     }
 }

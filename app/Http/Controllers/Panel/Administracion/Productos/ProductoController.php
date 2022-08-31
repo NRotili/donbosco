@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Panel\Administracion\Productos;
 
 use App\Http\Controllers\Controller;
 use App\Models\Producto;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -36,7 +37,13 @@ class ProductoController extends Controller
 
     public function show(Producto $producto)
     {
-        return view('panel.administracion.productos.show', compact('producto'));
+        $cantidad = 0;
+        $start = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $end = Carbon::now()->endOfMonth()->format('Y-m-d');
+        foreach ($producto->ventas->where('created_at', '>=', $start)->where('created_at','<=',$end) as $venta) {
+            $cantidad += $venta->pivot->cantidad;
+        }
+        return view('panel.administracion.productos.show', compact('producto', 'cantidad'));
     }
 
     public function edit(Producto $producto)

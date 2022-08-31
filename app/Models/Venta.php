@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Venta extends Model
 {
-    protected $guarded = ['id','created_at', 'updated_at'];
+    protected $guarded = ['id'];
 
     use HasFactory;
 
@@ -26,6 +26,7 @@ class Venta extends Model
     	return $this->belongsToMany(Producto::class)
                     ->withPivot('cantidad')
                     ->withPivot('preciocosto')
-                    ->withPivot('preciovendido');
+                    ->withPivot('preciovendido')
+                    ->withPivot('status');
     }
 }
