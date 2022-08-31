@@ -78,7 +78,7 @@ class SalesController extends Controller
                 //     }
                 // }  
             }
-            // return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de baja.');
+            return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de baja.');
         } else {
             $venta->update([
                 'status'=> 1,
@@ -100,7 +100,7 @@ class SalesController extends Controller
                 //     }
                 // }  
             }
-            // return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de alta.');
+            return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de alta.');
         }
     }
 }
