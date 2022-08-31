@@ -67,16 +67,16 @@ class SalesController extends Controller
             //Deshabilito venta_producto en pivote y aumento stock de los productos.
             foreach ($venta->productos as $producto) {
                 $venta->productos()->updateExistingPivot([$producto->id], ['status' => 0]);
-                if (!$producto->combo) {
-                    $producto->stock += $producto->pivot->cantidad;
-                    $producto->update();
+                // if (!$producto->combo) {
+                //     $producto->stock += $producto->pivot->cantidad;
+                //     $producto->update();
                     
-                } else {
-                    foreach ($producto->contproductos as $productocbo) {
-                        $productocbo->stock += $productocbo->pivot->cantidad * $producto->pivot->cantidad;
-                        $productocbo->update();
-                    }
-                }  
+                // } else {
+                //     foreach ($producto->contproductos as $productocbo) {
+                //         $productocbo->stock += $productocbo->pivot->cantidad * $producto->pivot->cantidad;
+                //         $productocbo->update();
+                //     }
+                // }  
             }
             // return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de baja.');
         } else {
@@ -86,19 +86,19 @@ class SalesController extends Controller
             //Habilito venta_producto en pivote y decremento stock de los productos.
             foreach ($venta->productos as $producto) {
                 $venta->productos()->updateExistingPivot([$producto->id], ['status' => 1]);
-                if (!$producto->combo) {
-                    $producto->stock -= $producto->pivot->cantidad;
-                    $producto->update();
+                // if (!$producto->combo) {
+                //     $producto->stock -= $producto->pivot->cantidad;
+                //     $producto->update();
                     
-                } else {
+                // } else {
 
 
-                    foreach ($producto->contproductos as $productocbo) {
-                        $productocbo->stock -= $productocbo->pivot->cantidad * $producto->pivot->cantidad;
-                        $productocbo->update();
+                //     foreach ($producto->contproductos as $productocbo) {
+                //         $productocbo->stock -= $productocbo->pivot->cantidad * $producto->pivot->cantidad;
+                //         $productocbo->update();
 
-                    }
-                }  
+                //     }
+                // }  
             }
             // return redirect()->route('panel.administracion.ventas.index')->with('success', 'La venta se dió de alta.');
         }
