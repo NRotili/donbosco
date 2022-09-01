@@ -54,6 +54,39 @@
                     </x-adminlte-callout>
                 </div>
             </div>
+            <div class="row">
+                <div class="col col-12 col-md-4">
+                    <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Remanente del día">
+                        @if ($remanenteHoy > 0)
+                            <strong>$ {{ $remanenteHoy }}</strong>
+                        @else
+                            Sin ventas
+                        @endif
+
+                    </x-adminlte-callout>
+                </div>
+                <div class="col col-12 col-md-4">
+                    <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Remanente del mes">
+                        @if ($remanenteMes > 0)
+                            <strong>$ {{ $remanenteMes }}</strong>
+                        @else
+                            Sin ventas
+                        @endif
+
+                    </x-adminlte-callout>
+                </div>
+                <div class="col col-12 col-md-4">
+                    <x-adminlte-callout theme="info" title-class="text-info text-uppercase" title="Remanente del año">
+                        @if ($remanenteAnual > 0)
+                            <strong>$ {{ $remanenteAnual }}</strong>
+                        @else
+                            Sin ventas
+                        @endif
+
+                    </x-adminlte-callout>
+
+                </div>
+            </div>
         </div>
     </div>
 @stop

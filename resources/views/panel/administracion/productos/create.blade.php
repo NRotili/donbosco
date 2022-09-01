@@ -7,7 +7,7 @@
 
       
 
-    <h1>Ingreso de compra</h1>
+    <h1>Ingreso de producto</h1>
 @stop
 
 @section('content')

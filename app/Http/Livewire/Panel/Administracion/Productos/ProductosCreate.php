@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Panel\Administracion\Productos;
 use App\Models\ComboProducto;
 use App\Models\Producto;
 use Livewire\Component;
+use Illuminate\Support\Facades\Validator;
 
 class ProductosCreate extends Component
 {
@@ -91,21 +92,9 @@ class ProductosCreate extends Component
 
     public function storeOrder()
     {
-        if ($this->nombre == '' || $this->preciocosto == '' || $this->preciolista == '' || $this->preciohappyhour == '') {
-            toastr()->title('Validación de campos')
-                    ->error('Hay campos obligatorios sin completar')
-                    ->timeOut(3000)
-                    ->progressBar()
-                    ->flash();
-        }
 
-        $this->validate([
-            'nombre' => 'required',
-            'preciocosto' => 'required',
-            'preciolista' => 'required',
-            'preciohappyhour' => 'required',
-        ]);
-
+        
+        
         if($this->codigo == null){
             $this->codigo = '-';
         }
@@ -115,6 +104,33 @@ class ProductosCreate extends Component
         }
         
         if(!$this->combo){
+
+            $validatedData = Validator::make(
+                [
+                    'nombre' => $this->nombre,
+                    'preciocosto' => $this->preciocosto,
+                    'preciolista' => $this->preciolista,
+                    'preciohappyhour' => $this->preciohappyhour,
+                    'stock' => $this->stock
+                ],
+                [
+                    'nombre' => 'required',
+                    'preciocosto' => 'required',
+                    'preciolista' => 'required',
+                    'preciohappyhour' => 'required',
+                    'stock' => 'required'
+                ],
+            );
+    
+            if ($validatedData->fails()) {
+                toastr()->title('Validación de campos')
+                    ->error('Hay campos obligatorios sin completar')
+                    ->timeOut(3000)
+                    ->progressBar()
+                    ->flash();
+            }
+    
+            $validatedData->validate();
 
             $results = array(
                 'codigo' => $this->codigo,
@@ -140,6 +156,34 @@ class ProductosCreate extends Component
                 
             return redirect()->route('panel.administracion.productos.index');
         } else {
+
+            $validatedData = Validator::make(
+                [
+                    'nombre' => $this->nombre,
+                    'preciocosto' => $this->preciocosto,
+                    'preciolista' => $this->preciolista,
+                    'preciohappyhour' => $this->preciohappyhour,
+                    'comboProductos' =>$this->comboProducts
+                ],
+                [
+                    'nombre' => 'required',
+                    'preciocosto' => 'required',
+                    'preciolista' => 'required',
+                    'preciohappyhour' => 'required',
+                    'comboProductos' => 'array|min:1'
+                ],
+            );
+    
+            if ($validatedData->fails()) {
+                toastr()->title('Validación de campos')
+                    ->error('Hay campos obligatorios sin completar')
+                    ->timeOut(3000)
+                    ->progressBar()
+                    ->flash();
+            }
+    
+            $validatedData->validate();
+
             $results = array(
                 'codigo' => $this->codigo,
                 'nombre' => $this->nombre,

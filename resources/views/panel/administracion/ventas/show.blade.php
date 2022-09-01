@@ -15,16 +15,21 @@
 @section('content')
 
 <div class="row">
-    <div class="col col-12 col-md-4">
+    <div class="col col-12 col-md-3">
         <x-adminlte-info-box title="Cliente"
             text="{{ Str::upper($venta->cliente->apellido) . ', ' . $venta->cliente->nombre }}" icon="far fa-lg fa-user" />
     </div>
-    <div class="col col-12 col-md-4">
+    <div class="col col-12 col-md-3">
         <x-adminlte-info-box title="Fecha y hora"
         text="{{ \Carbon\Carbon::parse($venta->created_at)->format('d/m/Y - H:i:s') }}"
         icon="far fa-lg fa-calendar" />
     </div>
-    <div class="col col-12 col-md-4">
+    <div class="col col-12 col-md-3">
+        <x-adminlte-info-box title="Monto subtotal"
+            text="{{ $venta->subtotal }}"
+            icon="fas fa-lg fa-dollar-sign" />
+    </div>
+    <div class="col col-12 col-md-3">
         <x-adminlte-info-box title="Monto total"
             text="{{ $venta->total }}"
             icon="fas fa-lg fa-dollar-sign" />

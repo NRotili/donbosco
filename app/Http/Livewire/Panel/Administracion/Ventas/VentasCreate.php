@@ -10,7 +10,6 @@ use App\Models\ProductoVenta;
 use App\Models\Venta;
 use Carbon\Carbon;
 use Livewire\Component;
-use Flasher\Toastr\Prime\ToastrFactory;
 use Illuminate\Support\Facades\Validator;
 
 class VentasCreate extends Component
@@ -36,16 +35,24 @@ class VentasCreate extends Component
 
     public function mount()
     {
+        //Cargo cliente predeterminado según hora.
         if (Carbon::now()->format('H:i') <= '23:30' && Carbon::now()->format('H:i') >= '07:00' ) {
             $this->checkHH = true;
-            $this->selected_id = 4;
+            $cliente = Cliente::where('nombre', 'like', '%tarde%')->where('apellido', 'like', '%tarde%')->first();
+            $this->selected_id = $cliente->id;
+            // $this->selected_id = 4;
         } else {
-            $this->selected_id = 5;
+            $cliente = Cliente::where('nombre', 'like', '%noche%')->where('apellido','like', '%noche%')->first();
+            $this->selected_id = $cliente->id;
+            // $this->selected_id = 5;
         }
 
+        //Selecciono medio de pago predeterminado (efectivo)
+        $this->mediopago_id = (Mediopago::where('nombre', 'like', '%efectivo%')->first())->id;
+
+        //Completo form de hora.
         $this->fecha = Carbon::now()->format('Y-m-d');
         $this->hora = Carbon::now()->format('H:i');
-        
         //Cargo productos
         $this->productos = Producto::where('status', '1')->orderBy('nombre')->get();
         // Cargo clientes
@@ -214,6 +221,7 @@ class VentasCreate extends Component
         $validatedData->validate();
 
         $order = Venta::create([
+            'subtotal' => $this->subtotal,
             'total' => $this->total,
             'cliente_id' => $this->cliente_id,
             'mediopago_id' => $this->mediopago_id,
