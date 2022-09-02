@@ -20,14 +20,14 @@ class FinanzaController extends Controller
             ->sum('subtotal');
             $remanenteHoy = ProductoVenta::where('status', 1)
             ->whereBetween('created_at', [Carbon::yesterday()->format('Y-m-d') . " 06:00:01", Carbon::now()->format('Y-m-d') . " 06:00:00"])
-            ->sum(DB::raw('preciovendido - preciocosto'));
+            ->sum(DB::raw('(preciovendido-preciocosto)*cantidad'));
         }else{
             $ventaHoy = Venta::where('status', 1)
             ->whereBetween('created_at', [Carbon::now()->format('Y-m-d') . " 06:00:01", Carbon::tomorrow()->format('Y-m-d') . " 06:00:00"])
             ->sum('subtotal');
             $remanenteHoy = ProductoVenta::where('status', 1)
             ->whereBetween('created_at', [Carbon::now()->format('Y-m-d') . " 06:00:01", Carbon::tomorrow()->format('Y-m-d') . " 06:00:00"])
-            ->sum(DB::raw('preciovendido - preciocosto'));
+            ->sum(DB::raw('(preciovendido-preciocosto)*cantidad'));
 
         }
 
@@ -36,7 +36,7 @@ class FinanzaController extends Controller
             ->sum('subtotal');
         $remanenteMes = ProductoVenta::where('status', 1)
             ->whereMonth('created_at', Carbon::now()->format('m'))
-            ->sum(DB::raw('preciovendido - preciocosto'));
+            ->sum(DB::raw('(preciovendido-preciocosto)*cantidad'));
 
 
         $ventaAnual = Venta::where('status', 1)
@@ -44,7 +44,7 @@ class FinanzaController extends Controller
             ->sum('subtotal');
         $remanenteAnual = ProductoVenta::where('status', 1)
             ->whereYear('created_at', Carbon::now()->format('Y'))
-            ->sum(DB::raw('preciovendido - preciocosto'));
+            ->sum(DB::raw('(preciovendido-preciocosto)*cantidad'));
 
         $productos = Producto::where('status', 1)->where('combo',0)->where('stock', '>',0)->get();
 
