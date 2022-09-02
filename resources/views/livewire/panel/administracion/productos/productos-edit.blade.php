@@ -17,6 +17,9 @@
                         <label for="nombre">Nombre*</label>
                         <input type="text" class="form-control" name="nombre" id="nombre"
                             placeholder="Nombre del producto" wire:model.defer="nombre" required>
+                            @if($errors->has('nombre'))
+                            <small class="text-danger">{{$errors->first('nombre')}}</small>
+                    @endif
                     </div>
     
                     <div class="form-group col-md-6">
@@ -39,12 +42,18 @@
                         <label for="stock">Stock</label>
                         <input type="number" class="form-control" name="stock" id="stock" placeholder="Stock"
                             @if ($combo) disabled @endif wire:model.defer="stock">
+                            @if($errors->has('stock'))
+                        <small class="text-danger">{{$errors->first('stock')}}</small>
+                    @endif
                     </div>
     
                     <div class="form-group col-md-3">
                         <label for="preciocosto">Precio Costo*</label>
                         <input type="number" class="form-control" name="preciocosto" id="preciocosto"
                             placeholder="Utilice . para decimal" wire:model.defer="preciocosto" required>
+                            @if($errors->has('precioCosto'))
+                        <small class="text-danger">{{$errors->first('precioCosto')}}</small>
+                    @endif
     
                     </div>
     
@@ -52,12 +61,20 @@
                         <label for="preciolista">Precio Lista*</label>
                         <input type="number" class="form-control" name="preciolista" id="preciolista"
                             placeholder="Utilice . para decimal" wire:model.defer="preciolista" required>
+
+                            @if($errors->has('precioLista'))
+                        <small class="text-danger">{{$errors->first('precioLista')}}</small>
+                    @endif
     
                     </div>
                     <div class="form-group col-md-3">
                         <label for="preciohappyhour">Precio HH*</label>
                         <input type="number" class="form-control" name="preciohappyhour" id="preciohappyhour"
                             placeholder="Utilice . para decimal" wire:model.defer="preciohappyhour" required>
+
+                            @if($errors->has('precioHappyHour'))
+                        <small class="text-danger">{{$errors->first('precioHappyHour')}}</small>
+                    @endif
     
                     </div>
     
@@ -144,7 +161,7 @@
         @endif
 
         <div class="mb-5 mt-1 ">
-            <button type="submit" class="btn btn-block btn-success" wire:click.prevent="updateProduct()">Actualizar</button>
+            <button type="submit" wire:loading.attr="disabled" class="btn btn-block btn-success" wire:click.prevent="updateProduct()">Actualizar</button>
         </div>
     
     

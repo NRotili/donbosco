@@ -50,8 +50,8 @@
                     <label for="preciocosto">Precio Costo*</label>
                     <input type="number" class="form-control" name="preciocosto" id="preciocosto"
                         placeholder="Utilice . para decimal" wire:model.defer="preciocosto" required>
-                        @if($errors->has('preciocosto'))
-                        <small class="text-danger">{{$errors->first('preciocosto')}}</small>
+                        @if($errors->has('precioCosto'))
+                        <small class="text-danger">{{$errors->first('precioCosto')}}</small>
                     @endif
                 </div>
 
@@ -59,16 +59,16 @@
                     <label for="preciolista">Precio Lista*</label>
                     <input type="number" class="form-control" name="preciolista" id="preciolista"
                         placeholder="Utilice . para decimal" wire:model.defer="preciolista" required>
-                        @if($errors->has('preciolista'))
-                        <small class="text-danger">{{$errors->first('preciolista')}}</small>
+                        @if($errors->has('precioLista'))
+                        <small class="text-danger">{{$errors->first('precioLista')}}</small>
                     @endif
                 </div>
                 <div class="form-group col-md-3">
                     <label for="preciohappyhour">Precio HH*</label>
                     <input type="number" class="form-control" name="preciohappyhour" id="preciohappyhour"
                         placeholder="Utilice . para decimal" wire:model.defer="preciohappyhour" required>
-                        @if($errors->has('preciohappyhour'))
-                        <small class="text-danger">{{$errors->first('preciohappyhour')}}</small>
+                        @if($errors->has('precioHappyHour'))
+                        <small class="text-danger">{{$errors->first('precioHappyHour')}}</small>
                     @endif
                 </div>
 

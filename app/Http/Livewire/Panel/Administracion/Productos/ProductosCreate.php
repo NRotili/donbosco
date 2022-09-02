@@ -16,14 +16,6 @@ class ProductosCreate extends Component
 
 
     public $product_id, $itemtotal;
-    // public $cliente_id;
-    // public $selected_id, $search;
-    // public $clientes, $cliente;
-    // public $action = 1;
-    // public $total = 0;
-    // public $checkHH;
-    // public $itemCostos;
-
 
 
     public function render()
@@ -108,23 +100,23 @@ class ProductosCreate extends Component
             $validatedData = Validator::make(
                 [
                     'nombre' => $this->nombre,
-                    'preciocosto' => $this->preciocosto,
-                    'preciolista' => $this->preciolista,
-                    'preciohappyhour' => $this->preciohappyhour,
+                    'precioCosto' => $this->preciocosto,
+                    'precioLista' => $this->preciolista,
+                    'precioHappyHour' => $this->preciohappyhour,
                     'stock' => $this->stock
                 ],
                 [
                     'nombre' => 'required',
-                    'preciocosto' => 'required',
-                    'preciolista' => 'required',
-                    'preciohappyhour' => 'required',
-                    'stock' => 'required'
+                    'precioCosto' => 'required|numeric|min:0|lte:precioLista|lte:precioHappyHour',
+                    'precioLista' => 'required|numeric|gte:precioCosto',
+                    'precioHappyHour' => 'required|numeric|gte:precioCosto',
+                    'stock' => 'required|numeric|min:0'
                 ],
             );
     
             if ($validatedData->fails()) {
-                toastr()->title('Validación de campos')
-                    ->error('Hay campos obligatorios sin completar')
+                toastr()->title('Validación...')
+                    ->error('Hay errores en los campos.')
                     ->timeOut(3000)
                     ->progressBar()
                     ->flash();
@@ -160,23 +152,23 @@ class ProductosCreate extends Component
             $validatedData = Validator::make(
                 [
                     'nombre' => $this->nombre,
-                    'preciocosto' => $this->preciocosto,
-                    'preciolista' => $this->preciolista,
-                    'preciohappyhour' => $this->preciohappyhour,
+                    'precioCosto' => $this->preciocosto,
+                    'precioLista' => $this->preciolista,
+                    'precioHappyHour' => $this->preciohappyhour,
                     'comboProductos' =>$this->comboProducts
                 ],
                 [
                     'nombre' => 'required',
-                    'preciocosto' => 'required',
-                    'preciolista' => 'required',
-                    'preciohappyhour' => 'required',
+                    'precioCosto' => 'required|numeric|min:0|lte:preciolista|lte:preciohappyhour',
+                    'precioLista' => 'required|numeric|gte:preciocosto',
+                    'precioHappyHour' => 'required|numeric|gte:preciocosto',
                     'comboProductos' => 'array|min:1'
                 ],
             );
     
             if ($validatedData->fails()) {
-                toastr()->title('Validación de campos')
-                    ->error('Hay campos obligatorios sin completar')
+                toastr()->title('Validación...')
+                    ->error('Hay errores en los campos.')
                     ->timeOut(3000)
                     ->progressBar()
                     ->flash();

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Panel\Administracion\Productos;
 
 use App\Models\ComboProducto;
 use App\Models\Producto;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class ProductosEdit extends Component
@@ -105,21 +106,6 @@ class ProductosEdit extends Component
 
     public function updateProduct()
     {
-        if ($this->nombre == '' || $this->preciocosto == '' || $this->preciolista == '' || $this->preciohappyhour == '') {
-            toastr()->title('Validación de campos')
-                    ->error('Hay campos obligatorios sin completar')
-                    ->timeOut(3000)
-                    ->progressBar()
-                    ->flash();
-        }
-
-        $this->validate([
-            'nombre' => 'required',
-            'preciocosto' => 'required',
-            'preciolista' => 'required',
-            'preciohappyhour' => 'required',
-        ]);
-
         
         if($this->codigo == null){
             $this->codigo = '-';
@@ -130,6 +116,33 @@ class ProductosEdit extends Component
         }
 
         if(!$this->combo){
+
+            $validatedData = Validator::make(
+                [
+                    'nombre' => $this->nombre,
+                    'precioCosto' => $this->preciocosto,
+                    'precioLista' => $this->preciolista,
+                    'precioHappyHour' => $this->preciohappyhour,
+                    'stock' => $this->stock
+                ],
+                [
+                    'nombre' => 'required',
+                    'precioCosto' => 'required|numeric|min:0|lte:precioLista|lte:precioHappyHour',
+                    'precioLista' => 'required|numeric|gte:precioCosto',
+                    'precioHappyHour' => 'required|numeric|gte:precioCosto',
+                    'stock' => 'required|numeric|min:0'
+                ],
+            );
+    
+            if ($validatedData->fails()) {
+                toastr()->title('Validación...')
+                    ->error('Hay errores en los campos.')
+                    ->timeOut(3000)
+                    ->progressBar()
+                    ->flash();
+            }
+    
+            $validatedData->validate();
 
             $this->producto->codigo = $this->codigo;
             $this->producto->nombre = $this->nombre;
