@@ -159,9 +159,9 @@ class ProductosCreate extends Component
                 ],
                 [
                     'nombre' => 'required',
-                    'precioCosto' => 'required|numeric|min:0|lte:preciolista|lte:preciohappyhour',
-                    'precioLista' => 'required|numeric|gte:preciocosto',
-                    'precioHappyHour' => 'required|numeric|gte:preciocosto',
+                    'precioCosto' => 'required|numeric|min:0|lte:precioLista|lte:precioHappyHour',
+                    'precioLista' => 'required|numeric|gte:precioCosto',
+                    'precioHappyHour' => 'required|numeric|gte:precioCosto',
                     'comboProductos' => 'array|min:1'
                 ],
             );
