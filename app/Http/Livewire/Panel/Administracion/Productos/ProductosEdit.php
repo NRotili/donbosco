@@ -14,7 +14,7 @@ class ProductosEdit extends Component
     public $producto;
     //Creo atributos para formulario
     public $codigo, $nombre, $detalle, $combo, $preciocosto, $preciolista, $preciohappyhour, $stock;
-
+    public $preciocostoanterior;
     public $comboProducts = [];
     public $productos, $cantidad;
     public $product_id, $itemtotal;
@@ -26,6 +26,7 @@ class ProductosEdit extends Component
         $this->detalle = $this->producto->detalle;
         $this->combo = $this->producto->combo;
         $this->preciocosto = $this->producto->preciocosto;
+        $this->preciocostoanterior = $this->producto->preciocosto;
         $this->preciolista = $this->producto->preciolista;
         $this->preciohappyhour = $this->producto->preciohappyhour;
         $this->stock = $this->producto->stock;
@@ -116,7 +117,7 @@ class ProductosEdit extends Component
         }
 
         if(!$this->combo){
-
+            
             $validatedData = Validator::make(
                 [
                     'nombre' => $this->nombre,
@@ -155,6 +156,19 @@ class ProductosEdit extends Component
             $this->producto->updated_at = now();
 
             $this->producto->update();
+
+            if ($this->preciocostoanterior != $this->preciocosto) {
+                foreach ($this->producto->combos as $productoCbo) {
+                    $productoCbo->preciocosto -= $this->preciocostoanterior*$productoCbo->pivot->cantidad;
+                    $productoCbo->preciocosto += $this->preciocosto*$productoCbo->pivot->cantidad;
+                    $productoCbo->update();
+                }
+                toastr()->title('Información')
+                ->success('Combos actualizados')
+                ->timeOut(3000)
+                ->progressBar()
+                ->flash();
+            }
 
             ComboProducto::where('combo_id', $this->producto->id)->delete();
 
