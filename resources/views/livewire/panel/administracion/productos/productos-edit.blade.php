@@ -84,6 +84,35 @@
             </div>
         </div>
     
+
+        <div class="row">
+            <div class="col col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Categorías</strong>
+                        
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+    
+                            @foreach ($categorias as $categoria)
+                                <div class="col col-6 col-md-2">
+                                    <label>
+                                        <input type="checkbox" value="{{ $categoria->id }}"
+                                            wire:model="catSeleccionadas" class="form-checkbox"
+                                          >
+                                        <span class="ml-1">{{ $categoria->nombre }}</span>
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+
+
         @if ($combo)
             <div class="row">
                 <div class="col col-12 col-md-6">

@@ -16,8 +16,8 @@
                     <label for="nombre">Nombre*</label>
                     <input type="text" class="form-control" name="nombre" id="nombre"
                         placeholder="Nombre del producto" wire:model.defer="nombre" required>
-                    @if($errors->has('nombre'))
-                            <small class="text-danger">{{$errors->first('nombre')}}</small>
+                    @if ($errors->has('nombre'))
+                        <small class="text-danger">{{ $errors->first('nombre') }}</small>
                     @endif
                 </div>
 
@@ -41,8 +41,8 @@
                     <label for="stock">Stock*</label>
                     <input type="number" class="form-control" name="stock" id="stock" placeholder="Stock"
                         @if ($combo) disabled @endif wire:model.defer="stock">
-                    @if($errors->has('stock'))
-                        <small class="text-danger">{{$errors->first('stock')}}</small>
+                    @if ($errors->has('stock'))
+                        <small class="text-danger">{{ $errors->first('stock') }}</small>
                     @endif
                 </div>
 
@@ -50,8 +50,8 @@
                     <label for="preciocosto">Precio Costo*</label>
                     <input type="number" class="form-control" name="preciocosto" id="preciocosto"
                         placeholder="Utilice . para decimal" wire:model.defer="preciocosto" required>
-                        @if($errors->has('precioCosto'))
-                        <small class="text-danger">{{$errors->first('precioCosto')}}</small>
+                    @if ($errors->has('precioCosto'))
+                        <small class="text-danger">{{ $errors->first('precioCosto') }}</small>
                     @endif
                 </div>
 
@@ -59,16 +59,16 @@
                     <label for="preciolista">Precio Lista*</label>
                     <input type="number" class="form-control" name="preciolista" id="preciolista"
                         placeholder="Utilice . para decimal" wire:model.defer="preciolista" required>
-                        @if($errors->has('precioLista'))
-                        <small class="text-danger">{{$errors->first('precioLista')}}</small>
+                    @if ($errors->has('precioLista'))
+                        <small class="text-danger">{{ $errors->first('precioLista') }}</small>
                     @endif
                 </div>
                 <div class="form-group col-md-3">
                     <label for="preciohappyhour">Precio HH*</label>
                     <input type="number" class="form-control" name="preciohappyhour" id="preciohappyhour"
                         placeholder="Utilice . para decimal" wire:model.defer="preciohappyhour" required>
-                        @if($errors->has('precioHappyHour'))
-                        <small class="text-danger">{{$errors->first('precioHappyHour')}}</small>
+                    @if ($errors->has('precioHappyHour'))
+                        <small class="text-danger">{{ $errors->first('precioHappyHour') }}</small>
                     @endif
                 </div>
 
@@ -76,6 +76,31 @@
 
 
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Categorías</strong>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+
+                        @foreach ($categorias as $categoria)
+                            <div class="col col-6 col-md-2">
+                                <label>
+                                    <input type="checkbox" value="{{ $categoria->id }}"
+                                        wire:model="catSeleccionadas" class="form-checkbox ">
+                                    <span class="ml-1">{{ $categoria->nombre }}</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     @if ($combo)
@@ -92,7 +117,8 @@
                                         <option value="">Seleccione producto</option>
                                         @foreach ($productos as $producto)
                                             <option value="{{ $producto->id }}">{{ $producto->nombre }}
-                                                ({{ $producto->detalle }})</option>
+                                                ({{ $producto->detalle }})
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -148,9 +174,9 @@
                             </div>
                         </div>
 
-                    @if($errors->has('comboProductos'))
-                        <small class="text-danger">{{$errors->first('comboProductos')}}</small>
-                    @endif
+                        @if ($errors->has('comboProductos'))
+                            <small class="text-danger">{{ $errors->first('comboProductos') }}</small>
+                        @endif
 
                     </div>
                 </div>
@@ -160,7 +186,8 @@
 
 
     <div class="mb-5 mt-1 ">
-        <button type="submit" wire:loading.attr="disabled" class="btn btn-block btn-success" wire:click.prevent="storeOrder()">Guardar</button>
+        <button type="submit" wire:loading.attr="disabled" class="btn btn-block btn-success"
+            wire:click.prevent="storeOrder()">Guardar</button>
     </div>
 
 

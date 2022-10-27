@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Panel\Administracion\Productos;
 
+use App\Models\Categoria;
 use App\Models\ComboProducto;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Validator;
@@ -19,8 +20,11 @@ class ProductosEdit extends Component
     public $productos, $cantidad;
     public $product_id, $itemtotal;
 
+    public $categorias, $catSeleccionadas = [];
+
     public function mount()
     {
+
         $this->codigo = $this->producto->codigo;
         $this->nombre = $this->producto->nombre;
         $this->detalle = $this->producto->detalle;
@@ -31,6 +35,7 @@ class ProductosEdit extends Component
         $this->preciohappyhour = $this->producto->preciohappyhour;
         $this->stock = $this->producto->stock;
 
+        $this->catSeleccionadas = $this->producto->categorias->pluck('id');
         
         if ($this->combo) {
             foreach ($this->producto->contproductos as $productoCombo) {
@@ -48,6 +53,7 @@ class ProductosEdit extends Component
 
     public function render()
     {
+        $this->categorias = Categoria::where('status', 1)->get();     
 
         $this->productos = Producto::where('status', '1')
             ->where('combo', '0')
@@ -156,6 +162,7 @@ class ProductosEdit extends Component
             $this->producto->updated_at = now();
 
             $this->producto->update();
+            $this->producto->categorias()->sync($this->catSeleccionadas);
 
             if ($this->preciocostoanterior != $this->preciocosto) {
                 foreach ($this->producto->combos as $productoCbo) {
@@ -192,6 +199,7 @@ class ProductosEdit extends Component
             $this->producto->updated_at = now();
 
             $this->producto->update();
+            $this->producto->categorias()->sync($this->catSeleccionadas);
 
             ComboProducto::where('combo_id', $this->producto->id)->delete();
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Panel\Administracion\Productos;
 
+use App\Models\Categoria;
 use App\Models\ComboProducto;
 use App\Models\Producto;
 use Livewire\Component;
@@ -13,7 +14,7 @@ class ProductosCreate extends Component
     public $codigo, $nombre, $detalle, $preciocosto, $preciolista, $preciohappyhour, $combo = false, $stock;
     public $comboProducts = [];
     public $productos, $cantidad;
-
+    public $categorias, $catSeleccionadas = [];
 
     public $product_id, $itemtotal;
 
@@ -25,7 +26,9 @@ class ProductosCreate extends Component
                             ->where('combo', '0')
                             ->get();
 
-        return view('livewire.panel.administracion.productos.productos-create', ['productos' => $this->productos]);
+        $this->categorias = Categoria::where('status', 1)->get();     
+
+        return view('livewire.panel.administracion.productos.productos-create', ['productos' => $this->productos, 'categorias'=>$this->categorias]);
         
     }
     public function doAction($action)
@@ -137,8 +140,9 @@ class ProductosCreate extends Component
                 'created_at' => now(),
                 'updated_at' => now()
             );
-
-            Producto::create($results);
+            $productoInsert = Producto::create($results);
+            $productoInsert->categorias()->sync($this->catSeleccionadas);
+            
 
             toastr()->title('Información')
                 ->success('Producto creado')
@@ -191,6 +195,8 @@ class ProductosCreate extends Component
             );
 
             $producto = Producto::create($results);
+            $producto->categorias()->sync($this->catSeleccionadas);
+
 
             foreach ($this->comboProducts as $key => $product) {
     
