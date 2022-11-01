@@ -9,6 +9,7 @@ use App\Http\Controllers\Panel\Configuracion\RoleController;
 use App\Http\Controllers\Panel\Configuracion\Sistema\ConfigController;
 use App\Http\Controllers\Panel\Configuracion\UserController;
 use App\Http\Controllers\Panel\HomeController;
+use App\Http\Controllers\Panel\Reportes\ReporteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,14 +31,15 @@ Route::resource('administracion/productos', ProductoController::class)->names('p
 Route::resource('administracion/categorias', CategoriaController::class)->names('panel.administracion.categorias');
 
 Route::resource('configuracion/sistema', ConfigController::class)->names('panel.configuraciones.sistema');
-
 Route::resource('configuracion/users', UserController::class)->names('panel.configuracion.users');
 Route::resource('configuracion/roles', RoleController::class)->names('panel.configuracion.roles');
 
 Route::get('administracion/clientes/{id}/plus',[ClientController::class, 'plus'])->name('panel.administracion.clientes.plus');
 Route::put('administracion/clientes/plusupdate/{cliente}',[ClientController::class, 'plusupdate'])->name('panel.administracion.clientes.plusupdate');
-
 Route::get('administracion/finanzas', [FinanzaController::class, 'index'])->name('panel.administracion.finanzas.index');
+
+Route::get('reportes', [ReporteController::class, 'index'])->name('panel.reportes.index');
+
 
 
 

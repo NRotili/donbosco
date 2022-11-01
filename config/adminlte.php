@@ -283,9 +283,9 @@ return [
         ],
         ['header' => 'REPORTES'],
         [
-            'text' => 'Lista de precios',
-            'route'  => 'panel.administracion.finanzas.index',
-            'active' =>['panel/administracion/finanzas*'],
+            'text' => 'Generar PDF',
+            'route'  => 'panel.reportes.index',
+            'active' =>['panel/reportes/*'],
             'can' => 'panel.administracion.finanzas.index',
             'icon' => 'fas fa-fw fa-print',
         ],
