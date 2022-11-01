@@ -53,7 +53,7 @@ class ProductosEdit extends Component
 
     public function render()
     {
-        $this->categorias = Categoria::where('status', 1)->get();     
+        $this->categorias = Categoria::where('status', 1)->orderBy('nombre')->get();     
 
         $this->productos = Producto::where('status', '1')
             ->where('combo', '0')

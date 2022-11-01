@@ -9,6 +9,8 @@ class Categoria extends Model
 {
     use HasFactory;
 
+    protected $guarded  = ['id','created_at', 'updated_at'];
+
     public function productos()
     {
         return $this->belongsToMany(Producto::class);

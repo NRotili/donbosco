@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Panel\Administracion\Categorias\CategoriaController;
 use App\Http\Controllers\Panel\Administracion\Clientes\ClientController;
 use App\Http\Controllers\Panel\Administracion\Finanzas\FinanzaController;
 use App\Http\Controllers\Panel\Administracion\Productos\ProductoController;
@@ -26,6 +27,7 @@ Route::get('/',[HomeController::class, 'index'])->name('panel.home');
 Route::resource('administracion/clientes', ClientController::class)->names('panel.administracion.clientes');
 Route::resource('administracion/ventas', SalesController::class)->names('panel.administracion.ventas');
 Route::resource('administracion/productos', ProductoController::class)->names('panel.administracion.productos');
+Route::resource('administracion/categorias', CategoriaController::class)->names('panel.administracion.categorias');
 
 Route::resource('configuracion/sistema', ConfigController::class)->names('panel.configuraciones.sistema');
 

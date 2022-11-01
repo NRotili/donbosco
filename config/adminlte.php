@@ -268,6 +268,13 @@ return [
             'icon' => 'fas fa-fw fa-pallet',
         ],
         [
+            'text' => 'Categorías',
+            'route'  => 'panel.administracion.categorias.index',
+            'active' =>['panel/administracion/categorias*'],
+            'can' => 'panel.administracion.categorias.index',
+            'icon' => 'fas fa-fw fa-list',
+        ],
+        [
             'text' => 'Finanzas',
             'route'  => 'panel.administracion.finanzas.index',
             'active' =>['panel/administracion/finanzas*'],
