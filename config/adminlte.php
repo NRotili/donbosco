@@ -281,6 +281,14 @@ return [
             'can' => 'panel.administracion.finanzas.index',
             'icon' => 'fas fa-fw fa-dollar-sign',
         ],
+        ['header' => 'REPORTES'],
+        [
+            'text' => 'Lista de precios',
+            'route'  => 'panel.administracion.finanzas.index',
+            'active' =>['panel/administracion/finanzas*'],
+            'can' => 'panel.administracion.finanzas.index',
+            'icon' => 'fas fa-fw fa-print',
+        ],
         ['header' => 'CONFIGURACIONES'],
         [
             'text' => 'Sistema',
