@@ -47,7 +47,7 @@
                     @endif
                     </div>
     
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="preciocosto">Precio Costo*</label>
                         <input type="number" class="form-control" name="preciocosto" id="preciocosto"
                             placeholder="Utilice . para decimal" wire:model.defer="preciocosto" required>
@@ -57,7 +57,7 @@
     
                     </div>
     
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="preciolista">Precio Lista*</label>
                         <input type="number" class="form-control" name="preciolista" id="preciolista"
                             placeholder="Utilice . para decimal" wire:model.defer="preciolista" required>
@@ -67,7 +67,7 @@
                     @endif
     
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="preciohappyhour">Precio HH*</label>
                         <input type="number" class="form-control" name="preciohappyhour" id="preciohappyhour"
                             placeholder="Utilice . para decimal" wire:model.defer="preciohappyhour" required>
@@ -75,8 +75,17 @@
                             @if($errors->has('precioHappyHour'))
                         <small class="text-danger">{{$errors->first('precioHappyHour')}}</small>
                     @endif
-    
+                
                     </div>
+                    <div class="form-group col-md-3">
+                        <label for="preciomayorista">Precio Mayorista*</label>
+                        <input type="number" class="form-control" name="preciomayorista" id="preciomayorista"
+                            placeholder="Utilice . para decimal" wire:model.defer="preciomayorista" required>
+
+                            @if($errors->has('precioMayorista'))
+                        <small class="text-danger">{{$errors->first('precioMayorista')}}</small>
+                    @endif
+                </div>
     
                 </div>
     

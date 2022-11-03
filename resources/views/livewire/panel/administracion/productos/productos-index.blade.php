@@ -39,10 +39,10 @@
                         <thead>
                             <tr>
                                 <th>Producto</th>
-                                <th>Detalle</th>
                                 <th>$ Costo</th>
                                 <th>$ Lista</th>
                                 <th>$ HH</th>
+                                <th>$ Mayorista</th>
                                 <th>Stock</th>
                                 <th class="text-center"colspan="4">Acción</th>
                             </tr>
@@ -52,16 +52,11 @@
                                 <tr class="disabled"
                                     @if ($producto->status == 0) style="text-decoration:line-through" @endif>
                                     <td>{{ $producto->nombre }}</td>
-                                    <td>
-                                        @if ($producto->detalle)
-                                            {{ $producto->detalle }}
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
+                                    
                                     <td>${{ $producto->preciocosto }}</td>
                                     <td>${{ $producto->preciolista }}</td>
                                     <td>${{ $producto->preciohappyhour }}</td>
+                                    <td>${{ $producto->preciomayorista }}</td>
                                     <td>
                                         @if (!$producto->combo)
                                             {{ $producto->stock }}

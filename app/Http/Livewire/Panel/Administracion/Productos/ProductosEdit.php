@@ -14,7 +14,7 @@ class ProductosEdit extends Component
     //Recibo producto desde blade
     public $producto;
     //Creo atributos para formulario
-    public $codigo, $nombre, $detalle, $combo, $preciocosto, $preciolista, $preciohappyhour, $stock;
+    public $codigo, $nombre, $detalle, $combo, $preciocosto, $preciolista, $preciohappyhour, $preciomayorista, $stock;
     public $preciocostoanterior;
     public $comboProducts = [];
     public $productos, $cantidad;
@@ -33,6 +33,7 @@ class ProductosEdit extends Component
         $this->preciocostoanterior = $this->producto->preciocosto;
         $this->preciolista = $this->producto->preciolista;
         $this->preciohappyhour = $this->producto->preciohappyhour;
+        $this->preciomayorista = $this->producto->preciomayorista;
         $this->stock = $this->producto->stock;
 
         $this->catSeleccionadas = $this->producto->categorias->pluck('id');
@@ -130,6 +131,7 @@ class ProductosEdit extends Component
                     'precioCosto' => $this->preciocosto,
                     'precioLista' => $this->preciolista,
                     'precioHappyHour' => $this->preciohappyhour,
+                    'precioMayorista' => $this->preciomayorista,
                     'stock' => $this->stock
                 ],
                 [
@@ -137,6 +139,7 @@ class ProductosEdit extends Component
                     'precioCosto' => 'required|numeric|min:0|lte:precioLista|lte:precioHappyHour',
                     'precioLista' => 'required|numeric|gte:precioCosto',
                     'precioHappyHour' => 'required|numeric|gte:precioCosto',
+                    'precioMayorista' => 'required|numeric|gte:precioCosto',
                     'stock' => 'required|numeric|min:0'
                 ],
             );
@@ -157,6 +160,7 @@ class ProductosEdit extends Component
             $this->producto->preciocosto = $this->preciocosto;
             $this->producto->preciolista = $this->preciolista;
             $this->producto->preciohappyhour = $this->preciohappyhour;
+            $this->producto->preciomayorista = $this->preciomayorista;
             $this->producto->combo = $this->combo;
             $this->producto->stock = $this->stock;
             $this->producto->updated_at = now();
@@ -194,6 +198,7 @@ class ProductosEdit extends Component
             $this->producto->preciocosto = $this->preciocosto;
             $this->producto->preciolista = $this->preciolista;
             $this->producto->preciohappyhour = $this->preciohappyhour;
+            $this->producto->preciomayorista = $this->preciomayorista;
             $this->producto->combo = $this->combo;
             $this->producto->stock = $this->stock;
             $this->producto->updated_at = now();

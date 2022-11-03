@@ -39,7 +39,8 @@ Route::put('administracion/clientes/plusupdate/{cliente}',[ClientController::cla
 Route::get('administracion/finanzas', [FinanzaController::class, 'index'])->name('panel.administracion.finanzas.index');
 
 Route::get('reportes', [ReporteController::class, 'index'])->name('panel.reportes.index');
-Route::get('reportes/productos/listahh', [ReporteController::class, 'listahh'])->name('panel.reportes.listahh');
+Route::get('reportes/productos/listahh', [ReporteController::class, 'listahh'])->name('panel.reportes.productos.listahh');
+Route::get('reportes/productos/mayorista', [ReporteController::class, 'mayorista'])->name('panel.reportes.productos.mayorista');
 
 
 

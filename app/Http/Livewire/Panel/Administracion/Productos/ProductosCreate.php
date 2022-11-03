@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class ProductosCreate extends Component
 {
 
-    public $codigo, $nombre, $detalle, $preciocosto, $preciolista, $preciohappyhour, $combo = false, $stock;
+    public $codigo, $nombre, $detalle, $preciocosto, $preciolista, $preciohappyhour, $preciomayorista, $combo = false, $stock;
     public $comboProducts = [];
     public $productos, $cantidad;
     public $categorias, $catSeleccionadas = [];
@@ -106,6 +106,7 @@ class ProductosCreate extends Component
                     'precioCosto' => $this->preciocosto,
                     'precioLista' => $this->preciolista,
                     'precioHappyHour' => $this->preciohappyhour,
+                    'precioMayorista' => $this->preciomayorista,
                     'stock' => $this->stock
                 ],
                 [
@@ -113,6 +114,7 @@ class ProductosCreate extends Component
                     'precioCosto' => 'required|numeric|min:0|lte:precioLista|lte:precioHappyHour',
                     'precioLista' => 'required|numeric|gte:precioCosto',
                     'precioHappyHour' => 'required|numeric|gte:precioCosto',
+                    'precioMayorista' => 'required|numeric|gte:precioCosto',
                     'stock' => 'required|numeric|min:0'
                 ],
             );
@@ -134,6 +136,7 @@ class ProductosCreate extends Component
                 'preciocosto' => $this->preciocosto,
                 'preciolista' => $this->preciolista,
                 'preciohappyhour' => $this->preciohappyhour,
+                'preciomayorista' => $this->preciomayorista, 
                 'combo' => 0,
                 'stock' => $this->stock,
                 'status' => 1,
@@ -159,6 +162,7 @@ class ProductosCreate extends Component
                     'precioCosto' => $this->preciocosto,
                     'precioLista' => $this->preciolista,
                     'precioHappyHour' => $this->preciohappyhour,
+                    'precioMayorista' => $this->preciomayorista,
                     'comboProductos' =>$this->comboProducts
                 ],
                 [
@@ -166,6 +170,7 @@ class ProductosCreate extends Component
                     'precioCosto' => 'required|numeric|min:0|lte:precioLista|lte:precioHappyHour',
                     'precioLista' => 'required|numeric|gte:precioCosto',
                     'precioHappyHour' => 'required|numeric|gte:precioCosto',
+                    'precioMayorista' => 'required|numeric|gte:precioCosto',
                     'comboProductos' => 'array|min:1'
                 ],
             );
@@ -187,6 +192,7 @@ class ProductosCreate extends Component
                 'preciocosto' => $this->preciocosto,
                 'preciolista' => $this->preciolista,
                 'preciohappyhour' => $this->preciohappyhour,
+                'preciomayorista' => $this->preciomayorista,
                 'combo' => 1,
                 'stock' => 1,
                 'status' => 1,

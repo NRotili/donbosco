@@ -21,7 +21,7 @@
                     Precio de lista y Happy Hour
                 </div>
                 <div class="card-body">
-                    <a href="{{route('panel.reportes.listahh')}}" class="btn btn-primary btn-block">GENERAR PDF</a>
+                    <a href="{{route('panel.reportes.productos.listahh')}}" class="btn btn-primary btn-block">GENERAR PDF</a>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
                     Precio mayorista
                 </div>
                 <div class="card-body">
-                    <a href="{{route('panel.reportes.listahh')}}" class="btn btn-primary btn-block">GENERAR PDF</a>
+                    <a href="{{route('panel.reportes.productos.mayorista')}}" class="btn btn-primary btn-block">GENERAR PDF</a>
                 </div>
             </div>
         </div>
