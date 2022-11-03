@@ -9,7 +9,7 @@ use App\Http\Controllers\Panel\Configuracion\RoleController;
 use App\Http\Controllers\Panel\Configuracion\Sistema\ConfigController;
 use App\Http\Controllers\Panel\Configuracion\UserController;
 use App\Http\Controllers\Panel\HomeController;
-use App\Http\Controllers\Panel\Reportes\ReporteController;
+use App\Http\Controllers\Panel\Reportes\Productos\ReporteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +39,7 @@ Route::put('administracion/clientes/plusupdate/{cliente}',[ClientController::cla
 Route::get('administracion/finanzas', [FinanzaController::class, 'index'])->name('panel.administracion.finanzas.index');
 
 Route::get('reportes', [ReporteController::class, 'index'])->name('panel.reportes.index');
+Route::get('reportes/productos/listahh', [ReporteController::class, 'listahh'])->name('panel.reportes.listahh');
 
 
 
